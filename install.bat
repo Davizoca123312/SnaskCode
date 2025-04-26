@@ -10,10 +10,12 @@ start /wait %USERPROFILE%\Downloads\python-3.8.0-amd64.exe /quiet InstallAllUser
 :: Remover o instalador
 echo Removendo o instalador...
 del %USERPROFILE%\Downloads\python-3.8.0-amd64.exe
-
+echo Updating..
+python -m pip install --upgrade pip
 :: Baixar e instalar Lark
 echo Instalando Lark...
 pip install lark-parser
+
 
 echo Python 3.8.0 e Lark foram instalados com sucesso.
 pause
