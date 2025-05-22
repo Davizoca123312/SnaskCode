@@ -1,124 +1,4 @@
-Linguagem Snask
-===============
-
-Snask é uma linguagem de script de tipagem dinâmica, projetada para simplicidade e facilidade de uso. Ela possui uma sintaxe direta para declaração de variáveis, controle de fluxo, definição de funções e operações básicas de I/O. Este documento detalha as construções da linguagem e fornece exemplos para cada uma.
-
-Sumário
--------
-
-*   [1\. Primeiros Passos](https://www.google.com/search?q=#1-primeiros-passos)
-    
-*   [2\. Fundamentos da Linguagem](https://www.google.com/search?q=#2-fundamentos-da-linguagem)
-    
-    *   [2.1. Comentários](https://www.google.com/search?q=#21-comentários)
-        
-    *   [2.2. Tipos de Dados](https://www.google.com/search?q=#22-tipos-de-dados)
-        
-*   [3\. Variáveis e Constantes](https://www.google.com/search?q=#3-variáveis-e-constantes)
-    
-    *   [3.1. Declaração de Variável (make)](https://www.google.com/search?q=#31-declaração-de-variável-make)
-        
-    *   [3.2. Atribuição de Variável (set)](https://www.google.com/search?q=#32-atribuição-de-variável-set)
-        
-    *   [3.3. Excluindo Variáveis (zap)](https://www.google.com/search?q=#33-excluindo-variáveis-zap)
-        
-    *   [3.4. Declaração de Constante (keep)](https://www.google.com/search?q=#34-declaração-de-constante-keep)
-        
-*   [4\. Entrada e Saída](https://www.google.com/search?q=#4-entrada-e-saída)
-    
-    *   [4.1. Imprimindo Saída (shoo)](https://www.google.com/search?q=#41-imprimindo-saída-shoo)
-        
-    *   [4.2. Entrada do Usuário (grab, grabnum, grabtxt)](https://www.google.com/search?q=#42-entrada-do-usuário-grab-grabnum-grabtxt)
-        
-*   [5\. Funções](https://www.google.com/search?q=#5-funções)
-    
-    *   [5.1. Declaração de Função (craft)](https://www.google.com/search?q=#51-declaração-de-função-craft)
-        
-    *   [5.2. Chamada de Função](https://www.google.com/search?q=#52-chamada-de-função)
-        
-    *   [5.3. Retornando de Funções (back)](https://www.google.com/search?q=#53-retornando-de-funções-back)
-        
-*   [6\. Controle de Fluxo](https://www.google.com/search?q=#6-controle-de-fluxo)
-    
-    *   [6.1. Condicionais (when)](https://www.google.com/search?q=#61-condicionais-when)
-        
-    *   [6.2. Laços de Repetição (spin, loopy)](https://www.google.com/search?q=#62-laços-de-repetição-spin-loopy)
-        
-    *   [6.3. Controle de Laço (breaky, skipit)](https://www.google.com/search?q=#63-controle-de-laço-breaky-skipit)
-        
-*   [7\. Coleções](https://www.google.com/search?q=#7-coleções)
-    
-    *   [7.1. Listas (packs)](https://www.google.com/search?q=#71-listas-packs)
-        
-        *   [7.1.1. Declaração de Lista (pack)](https://www.google.com/search?q=#711-declaração-de-lista-pack)
-            
-        *   [7.1.2. Adicionando Elementos a uma Lista (packadd)](https://www.google.com/search?q=#712-adicionando-elementos-a-uma-lista-packadd)
-            
-        *   [7.1.3. Acessando Elementos da Lista (packget)](https://www.google.com/search?q=#713-acessando-elementos-da-lista-packget)
-            
-    *   [7.2. Dicionários (boxes)](https://www.google.com/search?q=#72-dicionários-boxes)
-        
-        *   [7.2.1. Declaração de Dicionário (box)](https://www.google.com/search?q=#721-declaração-de-dicionário-box)
-            
-        *   [7.2.2. Adicionando/Atualizando Elementos do Dicionário (boxput)](https://www.google.com/search?q=#722-adicionandoatualizando-elementos-do-dicionário-boxput)
-            
-        *   [7.2.3. Acessando Elementos do Dicionário (boxget)](https://www.google.com/search?q=#723-acessando-elementos-do-dicionário-boxget)
-            
-*   [8\. Operações de Tempo](https://www.google.com/search?q=#8-operações-de-tempo)
-    
-    *   [8.1. Espera (snooze)](https://www.google.com/search?q=#81-espera-snooze)
-        
-*   [9\. Conversão de Tipo (convert)](https://www.google.com/search?q=#9-conversão-de-tipo-convert)
-    
-*   [10\. Interações Externas](https://www.google.com/search?q=#10-interações-externas)
-    
-    *   [10.1. Usando Bibliotecas (to use)](https://www.google.com/search?q=#101-usando-bibliotecas-to-use)
-        
-    *   [10.2. Operações de Arquivo (readfile, writefile)](https://www.google.com/search?q=#102-operações-de-arquivo-readfile-writefile)
-        
-    *   [10.3. Requisições HTTP (httpget)](https://www.google.com/search?q=#103-requisições-http-httpget)
-        
-    *   [10.4. Análise de JSON (jsonparse)](https://www.google.com/search?q=#104-análise-de-json-jsonparse)
-        
-*   [11\. Funções Incorporadas e Expressões](https://www.google.com/search?q=#11-funções-incorporadas-e-expressões)
-    
-    *   [11.1. Operadores Aritméticos](https://www.google.com/search?q=#111-operadores-aritméticos)
-        
-    *   [11.2. Operadores de Comparação](https://www.google.com/search?q=#112-operadores-de-comparação)
-        
-    *   [11.3. Funções de String](https://www.google.com/search?q=#113-funções-de-string)
-        
-    *   [11.4. lenof](https://www.google.com/search?q=#114-lenof)
-        
-    *   [11.5. typeis](https://www.google.com/search?q=#115-typeis)
-        
-*   [12\. Detalhes do Intérprete](https://www.google.com/search?q=#12-detalhes-do-intérprete)
-    
-
-1\. Primeiros Passos
---------------------
-
-Para executar o código Snask, você precisa do SnaskInterpreter e de um parser Lark configurado com a gramática Snask. O interpretador processa a Árvore de Sintaxe Abstrata (AST) gerada pelo Lark.
-
-**Pré-requisitos:**
-
-*   Python 3.x
-    
-*   Biblioteca lark (pip install lark)
-    
-*   Biblioteca requests (pip install requests)
-    
-
-2\. Fundamentos da Linguagem
-----------------------------
-
-### 2.1. Comentários
-
-Comentários em Snask começam com # e continuam até o final da linha.
-
-Snippet de código
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # Este é um comentário de linha única  make myVar: int = 10; # Isso também funciona   `
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   # Linguagem Snask  Snask é uma linguagem de script de tipagem dinâmica, projetada para simplicidade e facilidade de uso. Ela possui uma sintaxe direta para declaração de variáveis, controle de fluxo, definição de funções e operações básicas de I/O. Este documento detalha as construções da linguagem e fornece exemplos para cada uma.  ## Sumário  * [1. Primeiros Passos](#1-primeiros-passos)  * [2. Fundamentos da Linguagem](#2-fundamentos-da-linguagem)      * [2.1. Comentários](#21-comentários)      * [2.2. Tipos de Dados](#22-tipos-de-dados)  * [3. Variáveis e Constantes](#3-variáveis-e-constantes)      * [3.1. Declaração de Variável (`make`)](#31-declaração-de-variável-make)      * [3.2. Atribuição de Variável (`set`)](#32-atribuição-de-variável-set)      * [3.3. Excluindo Variáveis (`zap`)](#33-excluindo-variáveis-zap)      * [3.4. Declaração de Constante (`keep`)](#34-declaração-de-constante-keep)  * [4. Entrada e Saída](#4-entrada-e-saída)      * [4.1. Imprimindo Saída (`shoo`)](#41-imprimindo-saída-shoo)      * [4.2. Entrada do Usuário (`grab`, `grabnum`, `grabtxt`)](#42-entrada-do-usuário-grab-grabnum-grabtxt)  * [5. Funções](#5-funções)      * [5.1. Declaração de Função (`craft`)](#51-declaração-de-função-craft)      * [5.2. Chamada de Função](#52-chamada-de-função)      * [5.3. Retornando de Funções (`back`)](#53-retornando-de-funções-back)  * [6. Controle de Fluxo](#6-controle-de-fluxo)      * [6.1. Condicionais (`when`)](#61-condicionais-when)      * [6.2. Laços de Repetição (`spin`, `loopy`)](#62-laços-de-repetição-spin-loopy)      * [6.3. Controle de Laço (`breaky`, `skipit`)](#63-controle-de-laço-breaky-skipit)  * [7. Coleções](#7-coleções)      * [7.1. Listas (packs)](#71-listas-packs)          * [7.1.1. Declaração de Lista (`pack`)](#711-declaração-de-lista-pack)          * [7.1.2. Adicionando Elementos a uma Lista (`packadd`)](#712-adicionando-elementos-a-uma-lista-packadd)          * [7.1.3. Acessando Elementos da Lista](#713-acessando-elementos-da-lista)      * [7.2. Dicionários (boxes)](#72-dicionários-boxes)          * [7.2.1. Declaração de Dicionário (`box`)](#721-declaração-de-dicionário-box)          * [7.2.2. Adicionando/Atualizando Elementos do Dicionário (`boxput`)](#722-adicionandoatualizando-elementos-do-dicionário-boxput)          * [7.2.3. Acessando Elementos do Dicionário](#723-acessando-elementos-do-dicionário)  * [8. Operações de Tempo](#8-operações-de-tempo)      * [8.1. Espera (`snooze`)](#81-espera-snooze)  * [9. Conversão de Tipo (`convert`)](#9-conversão-de-tipo-convert)  * [10. Interações Externas](#10-interações-externas)      * [10.1. Usando Bibliotecas (`to use`)](#101-usando-bibliotecas-to-use)      * [10.2. Operações de Arquivo (`readfile`, `writefile`)](#102-operações-de-arquivo-readfile-writefile)      * [10.3. Requisições HTTP (`httpget`)](#103-requisições-http-httpget)      * [10.4. Análise de JSON (`jsonparse`)](#104-análise-de-json-jsonparse)  * [11. Funções Incorporadas e Expressões](#11-funções-incorporadas-e-expressões)      * [11.1. Operadores Aritméticos](#111-operadores-aritméticos)      * [11.2. Operadores de Comparação](#112-operadores-de-comparação)      * [11.3. Funções de String](#113-funções-de-string)      * [11.4. `lenof`](#114-lenof)      * [11.5. `typeis`](#115-typeis)  * [12. Detalhes do Intérprete](#12-detalhes-do-intérprete)  ---  ## 1. Primeiros Passos  Para executar o código Snask, você precisa do `SnaskInterpreter` e de um parser Lark configurado com a gramática Snask. O interpretador processa a Árvore de Sintaxe Abstrata (AST) gerada pelo Lark.  **Pré-requisitos:**  * Python 3.x  * Biblioteca `lark` (`pip install lark`)  * Biblioteca `requests` (`pip install requests`)  ## 2. Fundamentos da Linguagem  ### 2.1. Comentários  Comentários em Snask começam com `#` e continuam até o final da linha.  ```snask  # Este é um comentário de linha única  make myVar: int = 10; # Isso também funciona   ``
 
 ### 2.2. Tipos de Dados
 
@@ -285,7 +165,7 @@ Snippet de código
 
 Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pack minhaLista: list = [10];  packadd minhaLista, 20;  shoo(minhaLista); # Saída: [10, 20]   `
 
-#### 7.1.3. Acessando Elementos da Lista (packget)
+#### 7.1.3. Acessando Elementos da Lista
 
 Elementos são acessados usando indexação baseada em zero (usando a sintaxe NOME\[expr\]).
 
@@ -311,7 +191,7 @@ Snippet de código
 
 Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   box infoUsuario: dict = {"id": 1};  boxput infoUsuario, "nome", "João Silva";  shoo(infoUsuario); # Saída: {"id": 1, "nome": "João Silva"}   `
 
-#### 7.2.3. Acessando Elementos do Dicionário (boxget)
+#### 7.2.3. Acessando Elementos do Dicionário
 
 Elementos são acessados usando suas chaves (usando a sintaxe NOME\[expr\]).
 
@@ -372,7 +252,7 @@ Realiza uma requisição GET para uma URL fornecida e retorna o corpo da respost
 
 Snippet de código
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make url: str = "https://www.example.com";  make resposta: str = httpget(url);  shoo("Comprimento da Resposta HTTP: {}", lenof(resposta));   `
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make url: str = "[https://www.example.com](https://www.example.com)";  make resposta: str = httpget(url);  shoo("Comprimento da Resposta HTTP: {}", lenof(resposta));   `
 
 ### 10.4. Análise de JSON (jsonparse)
 
