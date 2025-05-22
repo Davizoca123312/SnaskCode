@@ -6,98 +6,53 @@ Snask é uma linguagem de programação **simples e expressiva**, projetada para
 Sumário
 -------
 
-*   [1\. Visão Geral da Linguagem](https://www.google.com/search?q=#1-visão-geral-da-linguagem)
-    
-*   [2\. Tipos de Dados](https://www.google.com/search?q=#2-tipos-de-dados)
-    
-*   [3\. Variáveis e Constantes](https://www.google.com/search?q=#3-variáveis-e-constantes)
-    
-    *   [Declaração de Variável (make)](https://www.google.com/search?q=#declaração-de-variável-make)
-        
-    *   [Atribuição de Variável (set)](https://www.google.com/search?q=#atribuição-de-variável-set)
-        
-    *   [Exclusão de Variável (zap)](https://www.google.com/search?q=#exclusão-de-variável-zap)
-        
-    *   [Declaração de Constante (keep)](https://www.google.com/search?q=#declaração-de-constante-keep)
-        
-*   [4\. Entrada e Saída](https://www.google.com/search?q=#4-entrada-e-saída)
-    
-    *   [Impressão de Saída (shoo)](https://www.google.com/search?q=#impressão-de-saída-shoo)
-        
-    *   [Entrada Geral (grab)](https://www.google.com/search?q=#entrada-geral-grab)
-        
-    *   [Entrada Numérica (grabnum)](https://www.google.com/search?q=#entrada-numérica-grabnum)
-        
-    *   [Entrada de Texto (grabtxt)](https://www.google.com/search?q=#entrada-de-texto-grabtxt)
-        
-*   [5\. Controle de Fluxo](https://www.google.com/search?q=#5-controle-de-fluxo)
-    
-    *   [Declarações Condicionais (when)](https://www.google.com/search?q=#declarações-condicionais-when)
-        
-    *   [Loop Condicional (spin)](https://www.google.com/search?q=#loop-condicional-spin)
-        
-    *   [Loop Infinito (loopy)](https://www.google.com/search?q=#loop-infinito-loopy)
-        
-    *   [Quebrar Loop (breaky)](https://www.google.com/search?q=#quebrar-loop-breaky)
-        
-    *   [Pular Iteração (skipit)](https://www.google.com/search?q=#pular-iteração-skipit)
-        
-*   [6\. Funções](https://www.google.com/search?q=#6-funções)
-    
-    *   [Declaração de Função (craft)](https://www.google.com/search?q=#declaração-de-função-craft)
-        
-    *   [Chamada de Função](https://www.google.com/search?q=#chamada-de-função)
-        
-    *   [Retorno de Valor (back)](https://www.google.com/search?q=#retorno-de-valor-back)
-        
-*   [7\. Coleções](https://www.google.com/search?q=#7-coleções)
-    
-    *   [Listas (Packs)](https://www.google.com/search?q=#listas-packs)
-        
-        *   [Declaração de Lista (pack)](https://www.google.com/search?q=#declaração-de-lista-pack)
-            
-        *   [Adicionar Elementos (packadd)](https://www.google.com/search?q=#adicionar-elementos-packadd)
-            
-        *   [Acessar Elementos (Acesso por Índice)](https://www.google.com/search?q=#acessar-elementos-acesso-por-índice)
-            
-    *   [Dicionários (Boxes)](https://www.google.com/search?q=#dicionários-boxes)
-        
-        *   [Declaração de Dicionário (box)](https://www.google.com/search?q=#declaração-de-dicionário-box)
-            
-        *   [Adicionar/Atualizar Elementos (boxput)](https://www.google.com/search?q=#adicionaratualizar-elementos-boxput)
-            
-        *   [Acessar Elementos (Acesso por Chave)](https://www.google.com/search?q=#acessar-elementos-acesso-por-chave)
-            
-*   [8\. Operações de Tempo](https://www.google.com/search?q=#8-operações-de-tempo)
-    
-    *   [Pausar Execução (snooze)](https://www.google.com/search?q=#pausar-execução-snooze)
-        
-*   [9\. Conversão de Tipo](https://www.google.com/search?q=#9-conversão-de-tipo)
-    
-    *   [Converter Tipo de Variável (convert)](https://www.google.com/search?q=#converter-tipo-de-variável-convert)
-        
-*   [10\. Operações de Arquivo](https://www.google.com/search?q=#10-operações-de-arquivo)
-    
-    *   [Ler Arquivo (readfile)](https://www.google.com/search?q=#ler-arquivo-readfile)
-        
-    *   [Escrever Arquivo (writefile)](https://www.google.com/search?q=#escrever-arquivo-writefile)
-        
-*   [11\. Importação de Módulos](https://www.google.com/search?q=#11-importação-de-módulos)
-    
-    *   [Usar Bibliotecas (to use)](https://www.google.com/search?q=#usar-bibliotecas-to-use)
-        
-*   [12\. Expressões e Operadores](https://www.google.com/search?q=#12-expressões-e-operadores)
-    
-    *   [Operadores Aritméticos](https://www.google.com/search?q=#operadores-aritméticos)
-        
-    *   [Operadores de Comparação](https://www.google.com/search?q=#operadores-de-comparação)
-        
-    *   [Funções de String Embutidas](https://www.google.com/search?q=#funções-de-string-embutidas)
-        
-    *   [Outras Funções Embutidas](https://www.google.com/search?q=#outras-funções-embutidas)
-        
-    *   [Operações HTTP](https://www.google.com/search?q=#operações-http)
-        
+* [1. Visão Geral da Linguagem](#1-visão-geral-da-linguagem)
+* [2. Tipos de Dados](#2-tipos-de-dados)
+* [3. Variáveis e Constantes](#3-variáveis-e-constantes)
+  * [Declaração de Variável (make)](#declaração-de-variável-make)
+  * [Atribuição de Variável (set)](#atribuição-de-variável-set)
+  * [Exclusão de Variável (zap)](#exclusão-de-variável-zap)
+  * [Declaração de Constante (keep)](#declaração-de-constante-keep)
+* [4. Entrada e Saída](#4-entrada-e-saída)
+  * [Impressão de Saída (shoo)](#impressão-de-saída-shoo)
+  * [Entrada Geral (grab)](#entrada-geral-grab)
+  * [Entrada Numérica (grabnum)](#entrada-numérica-grabnum)
+  * [Entrada de Texto (grabtxt)](#entrada-de-texto-grabtxt)
+* [5. Controle de Fluxo](#5-controle-de-fluxo)
+  * [Declarações Condicionais (when)](#declarações-condicionais-when)
+  * [Loop Condicional (spin)](#loop-condicional-spin)
+  * [Loop Infinito (loopy)](#loop-infinito-loopy)
+  * [Quebrar Loop (breaky)](#quebrar-loop-breaky)
+  * [Pular Iteração (skipit)](#pular-iteração-skipit)
+* [6. Funções](#6-funções)
+  * [Declaração de Função (craft)](#declaração-de-função-craft)
+  * [Chamada de Função](#chamada-de-função)
+  * [Retorno de Valor (back)](#retorno-de-valor-back)
+* [7. Coleções](#7-coleções)
+  * [Listas (Packs)](#listas-packs)
+    * [Declaração de Lista (pack)](#declaração-de-lista-pack)
+    * [Adicionar Elementos (packadd)](#adicionar-elementos-packadd)
+    * [Acessar Elementos (Acesso por Índice)](#acessar-elementos-acesso-por-índice)
+  * [Dicionários (Boxes)](#dicionários-boxes)
+    * [Declaração de Dicionário (box)](#declaração-de-dicionário-box)
+    * [Adicionar/Atualizar Elementos (boxput)](#adicionaratualizar-elementos-boxput)
+    * [Acessar Elementos (Acesso por Chave)](#acessar-elementos-acesso-por-chave)
+* [8. Operações de Tempo](#8-operações-de-tempo)
+  * [Pausar Execução (snooze)](#pausar-execução-snooze)
+* [9. Conversão de Tipo](#9-conversão-de-tipo)
+  * [Converter Tipo de Variável (convert)](#converter-tipo-de-variável-convert)
+* [10. Operações de Arquivo](#10-operações-de-arquivo)
+  * [Ler Arquivo (readfile)](#ler-arquivo-readfile)
+  * [Escrever Arquivo (writefile)](#escrever-arquivo-writefile)
+* [11. Importação de Módulos](#11-importação-de-módulos)
+  * [Usar Bibliotecas (to use)](#usar-bibliotecas-to-use)
+* [12. Expressões e Operadores](#12-expressões-e-operadores)
+  * [Operadores Aritméticos](#operadores-aritméticos)
+  * [Operadores de Comparação](#operadores-de-comparação)
+  * [Funções de String Embutidas](#funções-de-string-embutidas)
+  * [Outras Funções Embutidas](#outras-funções-embutidas)
+  * [Operações HTTP](#operações-http)
+
 
 1\. Visão Geral da Linguagem
 ----------------------------
