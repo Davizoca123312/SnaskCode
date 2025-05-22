@@ -86,7 +86,7 @@ Comentários começam com `#` e vão até o fim da linha:
 Declara uma variável mutável:
 
 ```snask
-make idade: int = 20;
+make idade: int = 20
 ```
 
 ### keep
@@ -94,7 +94,7 @@ make idade: int = 20;
 Declara uma constante (imutável):
 
 ```snask
-keep pi: float = 3.14;
+keep pi: float = 3.14
 ```
 
 ### set
@@ -102,7 +102,7 @@ keep pi: float = 3.14;
 Atribui novo valor a uma variável:
 
 ```snask
-set idade = 21;
+set idade = 21
 ```
 
 ### zap
@@ -110,7 +110,7 @@ set idade = 21;
 Remove uma variável:
 
 ```snask
-zap idade: int;
+zap idade: int
 ```
 
 ## Entrada e Saída
@@ -120,7 +120,7 @@ zap idade: int;
 Exibe valores no terminal:
 
 ```snask
-shoo("Olá, {}!", "mundo");
+shoo("Olá, {}!", "mundo")
 ```
 
 ### grab
@@ -128,7 +128,7 @@ shoo("Olá, {}!", "mundo");
 Entrada genérica com tipo:
 
 ```snask
-grab idade: int;
+grab idade: int
 ```
 
 ### grabnum
@@ -136,7 +136,7 @@ grab idade: int;
 Entrada numérica:
 
 ```snask
-grabnum valor: int;
+grabnum valor: int
 ```
 
 ### grabtxt
@@ -144,7 +144,7 @@ grabnum valor: int;
 Entrada textual:
 
 ```snask
-grabtxt nome: str;
+grabtxt nome: str
 ```
 
 ## Funções
@@ -155,7 +155,7 @@ Define uma função:
 
 ```snask
 craft saudacao(nome: str) -> void:
-  shoo("Oi, {}!", nome);
+  shoo("Oi, {}!", nome)
 done
 ```
 
@@ -165,15 +165,15 @@ Retorna valor em uma função:
 
 ```snask
 craft soma(a: int, b: int) -> int:
-  back a + b;
+  back a + b
 done
 ```
 
 ### Chamadas de Função
 
 ```snask
-saudacao("Lang");
-make resultado = soma(2, 3);
+saudacao("Lang")
+make resultado = soma(2, 3)
 ```
 
 ## Controle de Fluxo
@@ -184,7 +184,7 @@ Executa código se condição for verdadeira:
 
 ```snask
 when idade over 18 {
-  shoo("Maior de idade");
+  shoo("Maior de idade")
 }
 ```
 
@@ -193,10 +193,10 @@ when idade over 18 {
 Laço enquanto:
 
 ```snask
-make i: int = 0;
+make i: int = 0
 spin i under 5:
-  shoo(i);
-  set i = i + 1;
+  shoo(i)
+  set i = i + 1
 done
 ```
 
@@ -206,8 +206,8 @@ Laço infinito:
 
 ```snask
 loopy:
-  shoo("Executando...");
-  breaky;
+  shoo("Executando...")
+  breaky
 done
 ```
 
@@ -215,17 +215,17 @@ done
 
 ```snask
 spin true:
-  make i: int = 0;
+  make i: int = 0
   loopy:
-    set i = i + 1;
+    set i = i + 1
     when i is 2 {
-      skipit;
+      skipit
     }
     when i over 3 {
-      breaky;
+      breaky
     }
   done
-  breaky;
+  breaky
 done
 ```
 
@@ -234,37 +234,37 @@ done
 ### pack (listas)
 
 ```snask
-pack lista: list = [1, 2];
+pack lista: list = [1, 2]
 ```
 
 ### packadd
 
 ```snask
-packadd lista 3;
+packadd lista 3
 ```
 
 ### packget
 
 ```snask
-make item = packget lista 0;
+make item = packget lista 0
 ```
 
 ### box (dicionários)
 
 ```snask
-box pessoa: dict = {nome: "João"};
+box pessoa: dict = {nome: "João"}
 ```
 
 ### boxput
 
 ```snask
-boxput pessoa idade 30;
+boxput pessoa idade 30
 ```
 
 ### boxget
 
 ```snask
-make nome = boxget pessoa nome;
+make nome = boxget pessoa nome
 ```
 
 ## Operações de Tempo
@@ -272,7 +272,7 @@ make nome = boxget pessoa nome;
 ### snooze
 
 ```snask
-snooze 2;  # Espera 2 segundos
+snooze 2  # Espera 2 segundos
 ```
 
 ## Conversões
@@ -280,7 +280,7 @@ snooze 2;  # Espera 2 segundos
 ### convert
 
 ```snask
-convert idade to str;
+convert idade to str
 ```
 
 ## Arquivos e Bibliotecas
@@ -288,16 +288,16 @@ convert idade to str;
 ### readfile e writefile
 
 ```snask
-writefile "arquivo.txt" with "Olá";
-readfile "arquivo.txt" to conteudo;
-shoo(conteudo);
+writefile "arquivo.txt" with "Olá"
+readfile "arquivo.txt" to conteudo
+shoo(conteudo)
 ```
 
 ### to use
 
 ```snask
-to use "math";
-to use "minha_lib";
+to use "math"
+to use "minha_lib"
 ```
 
 ## Funções Embutidas
@@ -305,27 +305,25 @@ to use "minha_lib";
 ### lenof e typeis
 
 ```snask
-shoo(lenof("abc"));
-shoo(typeis(123));
+shoo(lenof("abc"))
+shoo(typeis(123))
 ```
 
 ### toupper, tolower, startswith, endswith
 
 ```snask
-shoo(toupper("abc"));
-shoo(tolower("DEF"));
-shoo(startswith("lang", "la"));
-shoo(endswith("lang", "ng"));
+shoo(toupper("abc"))
+shoo(tolower("DEF"))
+shoo(startswith("lang", "la"))
+shoo(endswith("lang", "ng"))
 ```
 
 ### jsonparse e httpget
 
 ```snask
-make obj = jsonparse("{\"nome\": \"João\"}");
-shoo(obj["nome"]);
-make html = httpget("https://example.com");
+make obj = jsonparse("{\"nome\": \"João\"}")
+shoo(obj["nome"])
+make html = httpget("https://example.com")
 ```
 
 ---
-
-Essa é a documentação **completa** da linguagem Lang. Se quiser gerar uma versão HTML interativa ou um PDF formatado, posso ajudar com isso também!
