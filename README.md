@@ -96,7 +96,7 @@ Declara uma nova variável com um tipo especificado e um valor inicial.
 
 Snippet de código
 ```
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make idade: int = 25  make saudacao: str = "Olá, Snask!"  make esta_ativo: bool = true
+make idade: int = 25  make saudacao: str = "Olá, Snask!"  make esta_ativo: bool = true
 ```
 
 ### Atribuição de Variável (set)
@@ -108,9 +108,9 @@ Atribui um novo valor a uma variável já declarada.
 **Exemplo:**
 
 Snippet de código
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make contador: int = 0  set contador = contador + 1 # contador agora é 1  set saudacao = "Bem-vindo!"   `
-
+```
+make contador: int = 0  set contador = contador + 1 # contador agora é 1  set saudacao = "Bem-vindo!"   `
+```
 ### Exclusão de Variável (zap)
 
 Remove uma variável do escopo atual.
@@ -121,7 +121,7 @@ Remove uma variável do escopo atual.
 
 Snippet de código
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make dados_temp: str = "temporário"  shoo(dados_temp) # Imprime "temporário"  zap dados_temp  # shoo(dados_temp) # Isso causaria um erro, pois dados_temp não existe mais   `
+`   make dados_temp: str = "temporário"  shoo(dados_temp) # Imprime "temporário"  zap dados_temp  # shoo(dados_temp) # Isso causaria um erro, pois dados_temp não existe mais   `
 
 ### Declaração de Constante (keep)
 
@@ -133,7 +133,7 @@ Declara uma constante, similar a uma variável, mas seu valor não pode ser alte
 
 Snippet de código
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   keep PI: float = 3.14159  # set PI = 3.0 # Isso causaria um TypeError   `
+`   keep PI: float = 3.14159  # set PI = 3.0 # Isso causaria um TypeError   `
 
 4\. Entrada e Saída
 -------------------
@@ -148,7 +148,7 @@ Imprime o valor de uma expressão no console. Suporta formatação básica de st
 
 Snippet de código
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo("Olá, mundo!")  make nome: str = "Snask"  make versao: int = 1  shoo("Bem-vindo, {}! Versão {}.", .cdr {nome, versao})   `
+`   shoo("Olá, mundo!")  make nome: str = "Snask"  make versao: int = 1  shoo("Bem-vindo, {}! Versão {}.", .cdr {nome, versao})   `
 
 ### Entrada Geral (grab)
 
