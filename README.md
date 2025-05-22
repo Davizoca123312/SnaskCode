@@ -1,473 +1,480 @@
-Apresento a seguir a documentação da linguagem Snask, conforme solicitada:
+Linguagem Snask
+===============
 
-Documentação da Linguagem Snask
-===============================
-
-Snask é uma linguagem de programação **simples e expressiva**, projetada para **clareza e facilidade de uso**. Este documento descreve sua sintaxe, recursos e fornece exemplos para cada tipo de declaração e expressão.
+Snask é uma linguagem de script de tipagem dinâmica, projetada para simplicidade e facilidade de uso. Ela possui uma sintaxe direta para declaração de variáveis, controle de fluxo, definição de funções e operações básicas de I/O. Este documento detalha as construções da linguagem e fornece exemplos para cada uma.
 
 Sumário
 -------
 
-1.  Visão Geral da Linguagem
+*   [1\. Primeiros Passos](https://www.google.com/search?q=#1-primeiros-passos)
     
-2.  Tipos de Dados
+*   [2\. Fundamentos da Linguagem](https://www.google.com/search?q=#2-fundamentos-da-linguagem)
     
-3.  Variáveis e Constantes
+    *   [2.1. Comentários](https://www.google.com/search?q=#21-comentários)
+        
+    *   [2.2. Tipos de Dados](https://www.google.com/search?q=#22-tipos-de-dados)
+        
+*   [3\. Variáveis e Constantes](https://www.google.com/search?q=#3-variáveis-e-constantes)
     
-    *   Declaração de Variável (**make**)
+    *   [3.1. Declaração de Variável (make)](https://www.google.com/search?q=#31-declaração-de-variável-make)
         
-    *   Atribuição de Variável (**set**)
+    *   [3.2. Atribuição de Variável (set)](https://www.google.com/search?q=#32-atribuição-de-variável-set)
         
-    *   Exclusão de Variável (**zap**)
+    *   [3.3. Excluindo Variáveis (zap)](https://www.google.com/search?q=#33-excluindo-variáveis-zap)
         
-    *   Declaração de Constante (**keep**)
+    *   [3.4. Declaração de Constante (keep)](https://www.google.com/search?q=#34-declaração-de-constante-keep)
         
-4.  Entrada e Saída
+*   [4\. Entrada e Saída](https://www.google.com/search?q=#4-entrada-e-saída)
     
-    *   Impressão de Saída (**shoo**)
+    *   [4.1. Imprimindo Saída (shoo)](https://www.google.com/search?q=#41-imprimindo-saída-shoo)
         
-    *   Entrada Geral (**grab**)
+    *   [4.2. Entrada do Usuário (grab, grabnum, grabtxt)](https://www.google.com/search?q=#42-entrada-do-usuário-grab-grabnum-grabtxt)
         
-    *   Entrada Numérica (**grabnum**)
-        
-    *   Entrada de Texto (**grabtxt**)
-        
-5.  Controle de Fluxo
+*   [5\. Funções](https://www.google.com/search?q=#5-funções)
     
-    *   Declarações Condicionais (**when**)
+    *   [5.1. Declaração de Função (craft)](https://www.google.com/search?q=#51-declaração-de-função-craft)
         
-    *   Loop Condicional (**spin**)
+    *   [5.2. Chamada de Função](https://www.google.com/search?q=#52-chamada-de-função)
         
-    *   Loop Infinito (**loopy**)
+    *   [5.3. Retornando de Funções (back)](https://www.google.com/search?q=#53-retornando-de-funções-back)
         
-    *   Quebrar Loop (**breaky**)
-        
-    *   Pular Iteração (**skipit**)
-        
-6.  Funções
+*   [6\. Controle de Fluxo](https://www.google.com/search?q=#6-controle-de-fluxo)
     
-    *   Declaração de Função (**craft**)
+    *   [6.1. Condicionais (when)](https://www.google.com/search?q=#61-condicionais-when)
         
-    *   Chamada de Função
+    *   [6.2. Laços de Repetição (spin, loopy)](https://www.google.com/search?q=#62-laços-de-repetição-spin-loopy)
         
-    *   Retorno de Valor (**back**)
+    *   [6.3. Controle de Laço (breaky, skipit)](https://www.google.com/search?q=#63-controle-de-laço-breaky-skipit)
         
-7.  Coleções
+*   [7\. Coleções](https://www.google.com/search?q=#7-coleções)
     
-    *   Listas (Packs)
+    *   [7.1. Listas (packs)](https://www.google.com/search?q=#71-listas-packs)
         
-        *   Declaração de Lista (**pack**)
+        *   [7.1.1. Declaração de Lista (pack)](https://www.google.com/search?q=#711-declaração-de-lista-pack)
             
-        *   Adicionar Elementos (**packadd**)
+        *   [7.1.2. Adicionando Elementos a uma Lista (packadd)](https://www.google.com/search?q=#712-adicionando-elementos-a-uma-lista-packadd)
             
-        *   Acessar Elementos (Acesso por Índice)
+        *   [7.1.3. Acessando Elementos da Lista (packget)](https://www.google.com/search?q=#713-acessando-elementos-da-lista-packget)
             
-    *   Dicionários (Boxes)
+    *   [7.2. Dicionários (boxes)](https://www.google.com/search?q=#72-dicionários-boxes)
         
-        *   Declaração de Dicionário (**box**)
+        *   [7.2.1. Declaração de Dicionário (box)](https://www.google.com/search?q=#721-declaração-de-dicionário-box)
             
-        *   Adicionar/Atualizar Elementos (**boxput**)
+        *   [7.2.2. Adicionando/Atualizando Elementos do Dicionário (boxput)](https://www.google.com/search?q=#722-adicionandoatualizando-elementos-do-dicionário-boxput)
             
-        *   Acessar Elementos (Acesso por Chave)
+        *   [7.2.3. Acessando Elementos do Dicionário (boxget)](https://www.google.com/search?q=#723-acessando-elementos-do-dicionário-boxget)
             
-8.  Operações de Tempo
+*   [8\. Operações de Tempo](https://www.google.com/search?q=#8-operações-de-tempo)
     
-    *   Pausar Execução (**snooze**)
+    *   [8.1. Espera (snooze)](https://www.google.com/search?q=#81-espera-snooze)
         
-9.  Conversão de Tipo
+*   [9\. Conversão de Tipo (convert)](https://www.google.com/search?q=#9-conversão-de-tipo-convert)
     
-    *   Converter Tipo de Variável (**convert**)
-        
-10.  Operações de Arquivo
+*   [10\. Interações Externas](https://www.google.com/search?q=#10-interações-externas)
     
-    *   Ler Arquivo (**readfile**)
+    *   [10.1. Usando Bibliotecas (to use)](https://www.google.com/search?q=#101-usando-bibliotecas-to-use)
         
-    *   Escrever Arquivo (**writefile**)
+    *   [10.2. Operações de Arquivo (readfile, writefile)](https://www.google.com/search?q=#102-operações-de-arquivo-readfile-writefile)
         
-11.  Importação de Módulos
+    *   [10.3. Requisições HTTP (httpget)](https://www.google.com/search?q=#103-requisições-http-httpget)
+        
+    *   [10.4. Análise de JSON (jsonparse)](https://www.google.com/search?q=#104-análise-de-json-jsonparse)
+        
+*   [11\. Funções Incorporadas e Expressões](https://www.google.com/search?q=#11-funções-incorporadas-e-expressões)
     
-    *   Usar Bibliotecas (**to use**)
+    *   [11.1. Operadores Aritméticos](https://www.google.com/search?q=#111-operadores-aritméticos)
         
-12.  Expressões e Operadores
+    *   [11.2. Operadores de Comparação](https://www.google.com/search?q=#112-operadores-de-comparação)
+        
+    *   [11.3. Funções de String](https://www.google.com/search?q=#113-funções-de-string)
+        
+    *   [11.4. lenof](https://www.google.com/search?q=#114-lenof)
+        
+    *   [11.5. typeis](https://www.google.com/search?q=#115-typeis)
+        
+*   [12\. Detalhes do Intérprete](https://www.google.com/search?q=#12-detalhes-do-intérprete)
     
-    *   Operadores Aritméticos
-        
-    *   Operadores de Comparação
-        
-    *   Funções de String Embutidas
-        
-    *   Outras Funções Embutidas
-        
-    *   Operações HTTP
-        
 
-1\. Visão Geral da Linguagem
+1\. Primeiros Passos
+--------------------
+
+Para executar o código Snask, você precisa do SnaskInterpreter e de um parser Lark configurado com a gramática Snask. O interpretador processa a Árvore de Sintaxe Abstrata (AST) gerada pelo Lark.
+
+**Pré-requisitos:**
+
+*   Python 3.x
+    
+*   Biblioteca lark (pip install lark)
+    
+*   Biblioteca requests (pip install requests)
+    
+
+2\. Fundamentos da Linguagem
 ----------------------------
 
-Snask é uma linguagem **dinamicamente tipada** com uma sintaxe clara para construções de programação comuns. Ela suporta variáveis, constantes, I/O básico, controle de fluxo, funções, listas (**packs**), dicionários (**boxes**), operações de arquivo e importação de bibliotecas externas.
+### 2.1. Comentários
 
-2\. Tipos de Dados
-------------------
+Comentários em Snask começam com # e continuam até o final da linha.
 
-Snask suporta os seguintes tipos de dados fundamentais:
+Snippet de código
 
-*   **int**: Inteiros (ex: 10, -5)
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # Este é um comentário de linha única  make myVar: int = 10; # Isso também funciona   `
+
+### 2.2. Tipos de Dados
+
+Snask suporta os seguintes tipos de dados básicos:
+
+*   int: Números inteiros.
     
-*   **str**: Strings (ex: "olá", "Snask é legal")
+*   str: Cadeias de caracteres.
     
-*   **float**: Números de ponto flutuante (ex: 3.14, 0.5)
+*   float: Números de ponto flutuante.
     
-*   **bool**: Valores booleanos (**true**, **false**)
+*   bool: Valores booleanos (true ou false).
     
-*   **list**: Coleções ordenadas de itens (ex: \[1, 2, 3\])
+*   list: Coleções ordenadas de itens (packs).
     
-*   **dict**: Coleções não ordenadas de pares chave-valor (ex: {"nome": "Alice", "idade": 30})
+*   dict: Pares chave-valor (boxes).
     
-*   **void**: Representa a ausência de um valor (similar a None em Python). Usado para funções que não retornam nada.
+*   void: Representa a ausência de um valor, tipicamente para funções que não retornam nada.
     
-*   **any**: Um tipo curinga que pode conter qualquer valor.
+*   any: Um tipo curinga que pode corresponder a qualquer outro tipo.
     
-*   **module**: Representa uma biblioteca externa importada.
+*   module: Usado para bibliotecas Python ou Snask importadas.
     
 
 3\. Variáveis e Constantes
 --------------------------
 
-### Declaração de Variável (**make**)
+### 3.1. Declaração de Variável (make)
 
-Declara uma nova variável com um tipo especificado e um valor inicial.
+Declara e inicializa uma variável mutável com um tipo especificado.
 
-**Sintaxe**: make : \=
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make meuNumero: int = 123;  make meuTexto: str = "Olá Snask!";  make ehVerdadeiro: bool = true;   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make idade: int = 25  make saudacao: str = "Olá, Snask!"  make esta_ativo: bool = true   `
-
-### Atribuição de Variável (**set**)
+### 3.2. Atribuição de Variável (set)
 
 Atribui um novo valor a uma variável já declarada.
 
-**Sintaxe**: set \=
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make contador: int = 0;  set contador = 1;  shoo(contador); # Saída: 1   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make contador: int = 0  set contador = contador + 1 # contador agora é 1  set saudacao = "Bem-vindo!"   `
+### 3.3. Excluindo Variáveis (zap)
 
-### Exclusão de Variável (**zap**)
+Remove uma variável do ambiente atual.
 
-Remove uma variável do escopo atual.
+Snippet de código
 
-**Sintaxe**: zap
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make varTemporaria: str = "temporário";  shoo(varTemporaria); # Saída: temporário  zap varTemporaria;  # Tentar usar varTemporaria depois disso resultará em um erro   `
 
-**Exemplo**:
+### 3.4. Declaração de Constante (keep)
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make dados_temp: str = "temporário"  shoo(dados_temp) # Imprime "temporário"  zap dados_temp  # shoo(dados_temp) # Isso causaria um erro, pois dados_temp não existe mais   `
+Declara e inicializa uma variável constante. Seu valor não pode ser alterado após a declaração.
 
-### Declaração de Constante (**keep**)
+Snippet de código
 
-Declara uma constante, similar a uma variável, mas seu valor não pode ser alterado após a inicialização.
-
-**Sintaxe**: keep : \=
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   keep PI: float = 3.14159  # set PI = 3.0 # Isso causaria um TypeError   `
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   keep PI: float = 3.14159;  # set PI = 3.0; # Isso causaria um TypeError   `
 
 4\. Entrada e Saída
 -------------------
 
-### Impressão de Saída (**shoo**)
+### 4.1. Imprimindo Saída (shoo)
 
-Imprime o valor de uma expressão no console. Suporta formatação básica de string usando placeholders {}.
+Imprime valores no console. Suporta múltiplos argumentos e formatação de string usando placeholders {}.
 
-**Sintaxe**: shoo() \[.cdr {, , ...}\]
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo("Olá, Mundo!"); # Saída: Olá, Mundo!  make nome: str = "Alice";  shoo("Meu nome é {}", nome); # Saída: Meu nome é Alice  shoo("Número um: {}, Número dois: {}", 1, 2); # Saída: Número um: 1, Número dois: 2   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo("Olá, mundo!")  make nome: str = "Snask"  make versao: int = 1  shoo("Bem-vindo, {}! Versão {}.", .cdr {nome, versao})   `
+### 4.2. Entrada do Usuário (grab, grabnum, grabtxt)
 
-### Entrada Geral (**grab**)
+Lê a entrada do usuário e a atribui a uma variável.
 
-Solicita uma entrada do usuário e a armazena em uma variável de um tipo especificado. O interpretador tenta converter a entrada para o tipo de destino.
+*   grab NAME : type: Lê a entrada e tenta convertê-la para o type especificado.
+    
+*   grabnum NAME : type: Especificamente para entrada numérica (int ou float).
+    
+*   grabtxt NAME : type: Especificamente para entrada de string.
+    
 
-**Sintaxe**: grab :
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   grab nomeUsuario: str; # Solicita entrada de string  shoo("Olá, {}", nomeUsuario);  grabnum idadeUsuario: int; # Solicita entrada de inteiro  shoo("Você tem {} anos.", idadeUsuario);  grabtxt cidade: str; # Solicita entrada de string  shoo("Você mora em {}", cidade);   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   grab idade_usuario: int  shoo("Você digitou a idade: {}", .cdr {idade_usuario})   `
+5\. Funções
+-----------
 
-### Entrada Numérica (**grabnum**)
+### 5.1. Declaração de Função (craft)
 
-Especificamente solicita uma entrada numérica (inteiro).
+Define um bloco de código reutilizável. Funções podem receber parâmetros com tipos e devem especificar um tipo de retorno.
 
-**Sintaxe**: grabnum :
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   craft somarNumeros(a: int, b: int) -> int:      make soma: int = a + b;      back soma;  done  craft saudar(nome: str) -> void:      shoo("Saudações, {}!", nome);  done   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   grabnum quantidade: int  shoo("Quantidade: {}", .cdr {quantidade})   `
+### 5.2. Chamada de Função
 
-### Entrada de Texto (**grabtxt**)
+Executa uma função definida. Chamadas de função podem ser usadas como instruções ou dentro de expressões.
 
-Especificamente solicita uma entrada de texto (string).
+Snippet de código
 
-**Sintaxe**: grabtxt :
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML``   make resultado: int = somarNumeros(5, 3);  shoo(resultado); # Saída: 8  # A gramática fornecida não mostra "call", mas o interpretador a implementa como `func_call_stmt`.  # Se "call" for um token explícito na sua gramática para chamadas de função como instrução:  # call saudar("Bob"); # Saída: Saudações, Bob!  # Caso contrário, apenas o nome da função seguido de parênteses é a chamada de função (expressão).  # Para usar como instrução sem retorno:  saudar("Bob"); # Saída: Saudações, Bob!   ``
 
-**Exemplo**:
+### 5.3. Retornando de Funções (back)
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   grabtxt nome_usuario: str  shoo("Olá, {}", .cdr {nome_usuario})   `
+Especifica o valor que uma função deve retornar. Funções declaradas com void retornam None.
 
-5\. Controle de Fluxo
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   craft calcularArea(comprimento: float, largura: float) -> float:      back comprimento * largura;  done  make area: float = calcularArea(10.5, 5.0);  shoo("Área: {}", area); # Saída: Área: 52.5   `
+
+6\. Controle de Fluxo
 ---------------------
 
-### Declarações Condicionais (**when**)
+### 6.1. Condicionais (when)
 
 Executa um bloco de código se uma dada condição for verdadeira.
 
-**Sintaxe**: when { }
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make temperatura: int = 25;  when temperatura over 20 {      shoo("Está um dia quente!");  }   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make pontuacao: int = 95  when pontuacao over 90 {      shoo("Pontuação excelente!")  }  when pontuacao undereq 70 {      shoo("Precisa melhorar.")  }   `
+### 6.2. Laços de Repetição (spin, loopy)
 
-### Loop Condicional (**spin**)
+*   spin expr : stmt+: Um laço while que continua enquanto a expr (condição) for avaliada como verdadeira.
+    
+*   loopy : stmt+: Um laço infinito que continua indefinidamente até ser explicitamente interrompido.
+    
 
-Repete um bloco de código enquanto uma condição especificada permanecer verdadeira.
+Snippet de código
 
-**Sintaxe**: spin :
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # laço spin (laço while)  make contagem: int = 0;  spin contagem undereq 5 :      shoo("Contagem: {}", contagem);      set contagem = contagem + 1;  done  # laço loopy (laço infinito)  make x: int = 0;  loopy :      shoo("Looping...");      set x = x + 1;      when x over 2 {          breaky; # Sai do laço loopy      }  done   `
 
-**Exemplo**:
+### 6.3. Controle de Laço (breaky, skipit)
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make contador: int = 0  spin contador under 5 :      shoo("Contador é: {}", .cdr {contador})      set contador = contador + 1   `
+*   breaky: Termina imediatamente o laço mais interno.
+    
+*   skipit: Pula o restante da iteração atual do laço mais interno e prossegue para a próxima iteração.
+    
 
-### Loop Infinito (**loopy**)
+Snippet de código
 
-Executa um bloco de código repetidamente sem uma condição específica. Este loop deve ser encerrado usando **breaky**.
-
-**Sintaxe**: loopy :
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   loopy :      shoo("Isso será impresso para sempre, a menos que seja parado.")      make continuar_loop: bool = true      grabtxt valor_entrada: str      when valor_entrada is "parar" {          breaky      }   `
-
-### Quebrar Loop (**breaky**)
-
-Sai do loop **spin** ou **loopy** mais interno.
-
-**Sintaxe**: breaky
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   loopy :      shoo("Digite 'sair' para parar:")      grabtxt comando: str      when comando is "sair" {          breaky      }   `
-
-### Pular Iteração (**skipit**)
-
-Pula o restante da iteração atual do loop mais interno e prossegue para a próxima iteração.
-
-**Sintaxe**: skipit
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make i: int = 0  spin i under 5 :      set i = i + 1      when i is 3 {          shoo("Pulando o 3...")          skipit      }      shoo("Valor atual: {}", .cdr {i})   `
-
-6\. Funções
------------
-
-### Declaração de Função (**craft**)
-
-Define um bloco de código reutilizável. As funções podem receber parâmetros e retornar um valor.
-
-**Sintaxe**: craft (: , : , ...) -> : done
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   craft somar_numeros(a: int, b: int) -> int :      make soma: int = a + b      back soma  done  craft saudar(nome: str) -> void :      shoo("Olá, {}!", .cdr {nome})  done   `
-
-### Chamada de Função
-
-Executa uma função definida.
-
-**Sintaxe**: (, , ...)
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make resultado: int = somar_numeros(10, 20)  shoo("Soma: {}", .cdr {resultado}) # Imprime "Soma: 30"  saudar("Mundo") # Imprime "Olá, Mundo!"   `
-
-### Retorno de Valor (**back**)
-
-Especifica o valor que uma função irá retornar.
-
-**Sintaxe**: back
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   craft multiplicar(x: int, y: int) -> int :      back x * y  done  make produto: int = multiplicar(5, 6)  shoo("Produto: {}", .cdr {produto}) # Imprime "Produto: 30"   `
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   spin true:      make i: int = 0;      loopy :          shoo("Laço interno: {}", i);          set i = i + 1;          when i overeq 2 {              skipit; # Pula para a próxima iteração do laço 'loopy'          }          when i overeq 4 {              breaky; # Sai do laço 'loopy'          }      done      breaky; # Sai do laço 'spin' depois que o laço interno termina  done   `
 
 7\. Coleções
 ------------
 
-### Listas (Packs)
+### 7.1. Listas (packs)
 
 Coleções ordenadas e mutáveis de itens.
 
-#### Declaração de Lista (**pack**)
+#### 7.1.1. Declaração de Lista (pack)
 
-Cria uma nova lista, opcionalmente inicializada com elementos.
+Snippet de código
 
-**Sintaxe**: pack : list = \[, , ...\]
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pack minhaLista: list = [1, 2, 3];  pack listaVazia: list = [];   `
 
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pack meus_numeros: list = [1, 2, 3]  pack lista_vazia: list = []   `
-
-#### Adicionar Elementos (**packadd**)
+#### 7.1.2. Adicionando Elementos a uma Lista (packadd)
 
 Adiciona um elemento ao final de uma lista.
 
-**Sintaxe**: packadd
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pack minhaLista: list = [10];  packadd minhaLista, 20;  shoo(minhaLista); # Saída: [10, 20]   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pack minha_lista: list = ["maçã", "banana"]  packadd minha_lista "cereja"  shoo(minha_lista) # Imprime ["maçã", "banana", "cereja"]   `
+#### 7.1.3. Acessando Elementos da Lista (packget)
 
-#### Acessar Elementos (Acesso por Índice)
+Elementos são acessados usando indexação baseada em zero (usando a sintaxe NOME\[expr\]).
 
-Recupera um elemento de uma lista usando seu índice baseado em zero. Também usado para acessar valores em dicionários.
+Snippet de código
 
-**Sintaxe**: \[\]
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pack meusNomes: list = ["Alice", "Bob", "Charlie"];  shoo(meusNomes[0]); # Saída: Alice  shoo(meusNomes[1]); # Saída: Bob   `
 
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pack frutas: list = ["maçã", "banana", "laranja"]  shoo(frutas[0]) # Imprime "maçã"  shoo(frutas[lenof(frutas) - 1]) # Imprime "laranja"   `
-
-### Dicionários (Boxes)
+### 7.2. Dicionários (boxes)
 
 Coleções não ordenadas e mutáveis de pares chave-valor. As chaves são tipicamente strings.
 
-#### Declaração de Dicionário (**box**)
+#### 7.2.1. Declaração de Dicionário (box)
 
-Cria um novo dicionário, opcionalmente inicializado com pares chave-valor.
+Snippet de código
 
-**Sintaxe**: box : dict = {: , : , ...}
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   box meuDicionario: dict = {"nome": "Snask", "versao": "1.0"};  box dicionarioVazio: dict = {};   `
 
-**Exemplo**:
+#### 7.2.2. Adicionando/Atualizando Elementos do Dicionário (boxput)
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   box perfil_usuario: dict = {"nome": "Alice", "idade": 30}  box caixa_vazia: dict = {}   `
+Adiciona um novo par chave-valor ou atualiza uma chave existente.
 
-#### Adicionar/Atualizar Elementos (**boxput**)
+Snippet de código
 
-Adiciona um novo par chave-valor a um dicionário ou atualiza o valor para uma chave existente.
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   box infoUsuario: dict = {"id": 1};  boxput infoUsuario, "nome", "João Silva";  shoo(infoUsuario); # Saída: {"id": 1, "nome": "João Silva"}   `
 
-**Sintaxe**: boxput
+#### 7.2.3. Acessando Elementos do Dicionário (boxget)
 
-**Exemplo**:
+Elementos são acessados usando suas chaves (usando a sintaxe NOME\[expr\]).
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   box configuracoes: dict = {"tema": "escuro"}  boxput configuracoes "tamanho_fonte" 14  boxput configuracoes "tema" "claro" # Atualiza o tema  shoo(configuracoes) # Imprime {"tema": "claro", "tamanho_fonte": 14}   `
+Snippet de código
 
-#### Acessar Elementos (Acesso por Chave)
-
-Recupera um valor de um dicionário usando sua chave.
-
-**Sintaxe**: \[\]
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   box estudante: dict = {"id": 101, "nota": "A"}  shoo(estudante["nota"]) # Imprime "A"   `
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   box configuracao: dict = {"tema": "escuro", "idioma": "pt"};  shoo(configuracao["tema"]); # Saída: escuro   `
 
 8\. Operações de Tempo
 ----------------------
 
-### Pausar Execução (**snooze**)
+### 8.1. Espera (snooze)
 
-Pausa a execução do programa por um número especificado de segundos.
+Pausa a execução por uma duração especificada em segundos.
 
-**Sintaxe**: snooze
+Snippet de código
 
-**Exemplo**:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo("Esperando por 2 segundos...");  snooze 2; # Pausa por 2 segundos  shoo("Terminei de esperar.");   `
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo("Esperando por 2 segundos...")  snooze 2  shoo("Terminei de esperar.")   `
+9\. Conversão de Tipo (convert)
+-------------------------------
 
-9\. Conversão de Tipo
----------------------
+Converte o valor de uma variável para um tipo diferente, se possível.
 
-### Converter Tipo de Variável (**convert**)
+Snippet de código
 
-Tenta converter o valor de uma variável para um tipo especificado.
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make numStr: str = "123";  convert numStr to int;  shoo(numStr); # Saída: 123 (agora um inteiro)  make meuBool: bool = true;  convert meuBool to str;  shoo(meuBool); # Saída: "True" (agora uma string)   `
 
-**Sintaxe**: convert to
+10\. Interações Externas
+------------------------
 
-**Exemplo**:
+### 10.1. Usando Bibliotecas (to use)
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make num_str: str = "123"  shoo(typeis(num_str)) # Imprime "str"  convert num_str to int  shoo(typeis(num_str)) # Imprime "int"  shoo(num_str + 1) # Imprime 124 (agora realiza adição de inteiros)  make valor_bool: bool = true  shoo(typeis(valor_bool)) # Imprime "bool"  convert valor_bool to str  shoo(typeis(valor_bool)) # Imprime "str"  shoo(valor_bool) # Imprime "True"   `
+Importa funcionalidades externas. Pode importar módulos Python ou outros arquivos Snask.
 
-10\. Operações de Arquivo
--------------------------
-
-### Ler Arquivo (**readfile**)
-
-Lê todo o conteúdo de um arquivo especificado e o armazena como uma string em uma variável.
-
-**Sintaxe**: readfile "" to
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # Assumindo que um arquivo chamado "meus_dados.txt" existe com o conteúdo "Olá Arquivo!"  make conteudo_arquivo: str = ""  readfile "meus_dados.txt" to conteudo_arquivo  shoo(conteudo_arquivo) # Imprime "Olá Arquivo!"   `
-
-### Escrever Arquivo (**writefile**)
-
-Escreve o conteúdo de uma expressão em um arquivo especificado. Se o arquivo não existir, ele será criado. Se existir, seu conteúdo será sobrescrito.
-
-**Sintaxe**: writefile "" with
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   writefile "saida.txt" with "Este é um texto escrito do Snask."  shoo("Conteúdo escrito em saida.txt")   `
-
-11\. Importação de Módulos
---------------------------
-
-### Usar Bibliotecas (**to use**)
-
-Importa módulos externos, que podem ser módulos Python ou outros arquivos Snask (.snask).
-
-**Sintaxe**: to use ""
-
-**Exemplo**:
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # Para usar um módulo Python (ex: 'math')  to use "math"  # Você pode então acessar funções/variáveis do módulo 'math' se o interpretador as expuser.  # (Nota: A implementação atual do interpretador pode não expor diretamente o conteúdo do módulo como variáveis Snask.)  # Para usar outro arquivo Snask (ex: 'minhas_utilidades.snask' em uma pasta 'libs' ou no diretório atual)  # libs/minhas_utilidades.snask:  #    craft dizer_oi() -> void :  #        shoo("Oi das minhas_utilidades!")  #    done  to use "minhas_utilidades"  dizer_oi() # Chama a função do arquivo Snask importado   `
-
-12\. Expressões e Operadores
-----------------------------
-
-Expressões avaliam para um valor e podem ser usadas em várias declarações (ex: atribuições de variáveis, declarações de impressão, condições).
-
-### Operadores Aritméticos
-
-OperadorDescriçãoExemploResultado**+**Adição10 + 515**+**Concatenação"Olá" + "Mundo""OláMundo"**\-**Subtração10 - 55**\***Multiplicação10 \* 550**\***Repetição de String/Lista"abc" \* 3"abcabcabc"**/**Divisão10 / 25.0Exportar para as Planilhas
-
-### Operadores de Comparação
-
-OperadorDescriçãoExemploResultado**is**Igual a10 is 10true**aint**Diferente de10 aint 5true**over**Maior que10 over 5true**under**Menor que10 under 5false**overeq**Maior ou igual a10 overeq 10true**undereq**Menor ou igual a10 undereq 5false**\==**Igualdade Direta (mesmo que **is**)10 == 10trueExportar para as Planilhas
-
-### Funções de String Embutidas
-
-Estas funções operam em expressões de string.
-
-*   **lenof**(): Retorna o comprimento de uma string (ou lista/dicionário).**Exemplo**: shoo(lenof("Snask")) # Imprime 5
+*   Se libname for um nome de módulo Python válido, ele tenta importá-lo.
     
-*   **toupper**(): Converte uma string para maiúsculas.**Exemplo**: shoo(toupper("olá")) # Imprime "OLÁ"
-    
-*   **tolower**(): Converte uma string para minúsculas.**Exemplo**: shoo(tolower("MUNDO")) # Imprime "mundo"
-    
-*   **startswith**(, ): Verifica se uma string começa com um dado prefixo.**Exemplo**: shoo(startswith("maçã", "ma")) # Imprime true
-    
-*   **endswith**(, ): Verifica se uma string termina com um dado sufixo.**Exemplo**: shoo(endswith("banana", "ana")) # Imprime true
+*   Caso contrário, ele procura por libname.snask em ./libs/ ou no diretório atual e executa seu código.
     
 
-### Outras Funções Embutidas
+Snippet de código
 
-*   **typeis**(): Retorna o nome do tipo Snask do valor da expressão.**Exemplo**: shoo(typeis(123)) # Imprime "int"**Exemplo**: shoo(typeis("olá")) # Imprime "str"
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   to use "minha_lib_python"; # Tenta importar o módulo Python 'minha_lib_python'  to use "minha_lib_snask"; # Tenta carregar 'minha_lib_snask.snask'   `
+
+### 10.2. Operações de Arquivo (readfile, writefile)
+
+*   readfile FILEPATH\_EXPR to VAR\_NAME: Lê o conteúdo de um arquivo para uma variável de string.
+    
+*   writefile FILEPATH\_EXPR with CONTENT\_EXPR: Escreve um conteúdo de string em um arquivo especificado.
     
 
-### Operações HTTP
+Snippet de código
 
-*   make url\_api: str = "https://jsonplaceholder.typicode.com/todos/1" make texto\_resposta: str = httpget(url\_api) shoo(texto\_resposta) # Imprime a resposta JSON da API
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # Escrever em um arquivo  writefile "saida.txt" with "Este é algum texto.";  # Ler de um arquivo  readfile "saida.txt" to conteudoArquivo;  shoo(conteudoArquivo); # Saída: Este é algum texto.   `
+
+### 10.3. Requisições HTTP (httpget)
+
+Realiza uma requisição GET para uma URL fornecida e retorna o corpo da resposta como uma string.
+
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make url: str = "https://www.example.com";  make resposta: str = httpget(url);  shoo("Comprimento da Resposta HTTP: {}", lenof(resposta));   `
+
+### 10.4. Análise de JSON (jsonparse)
+
+Analisa uma string JSON em um dicionário ou lista Snask (dict/list Python).
+
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   make stringJson: str = "{\"nome\": \"João\", \"idade\": 30}";  make objetoJson: dict = jsonparse(stringJson);  shoo(objetoJson["nome"]); # Saída: João   `
+
+11\. Funções Incorporadas e Expressões
+--------------------------------------
+
+Snask suporta operações aritméticas padrão, operadores de comparação e várias funções incorporadas para manipulação de strings e verificação de tipo.
+
+### 11.1. Operadores Aritméticos
+
+*   \+ (add): Adição, concatenação de strings, concatenação de listas.
+    
+*   \- (sub): Subtração.
+    
+*   \* (mul): Multiplicação, repetição de string/lista.
+    
+*   / (div): Divisão (retorna float).
+    
+
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo(10 + 5);      # Saída: 15  shoo("Olá" + "Mundo"); # Saída: OláMundo  shoo([1,2] + [3,4]); # Saída: [1, 2, 3, 4]  shoo(10 - 5);      # Saída: 5  shoo(10 * 5);      # Saída: 50  shoo("abc" * 3);  # Saída: abcabcabc  shoo(10 / 3);      # Saída: 3.3333333333333335   `
+
+### 11.2. Operadores de Comparação
+
+*   is (==): Igual a.
+    
+*   aint (!=): Diferente de.
+    
+*   over (>): Maior que.
+    
+*   under (<): Menor que.
+    
+*   overeq (>=): Maior ou igual a.
+    
+*   undereq (<=): Menor ou igual a.
+    
+
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo(5 is 5);      # Saída: True  shoo(5 aint 10);    # Saída: True  shoo(10 over 5);    # Saída: True  shoo(5 under 10);    # Saída: True  shoo(10 overeq 10); # Saída: True  shoo(5 undereq 5); # Saída: True   `
+
+### 11.3. Funções de String
+
+*   toupper(expr): Converte uma string para maiúsculas.
+    
+*   tolower(expr): Converte uma string para minúsculas.
+    
+*   startswith(expr, prefix\_expr): Verifica se uma string começa com um dado prefixo.
+    
+*   endswith(expr, suffix\_expr): Verifica se uma string termina com um dado sufixo.
+    
+
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo(toupper("olá")); # Saída: OLÁ  shoo(tolower("MUNDO")); # Saída: mundo  shoo(startswith("maçã", "ma")); # Saída: True  shoo(endswith("banana", "ana")); # Saída: True   `
+
+### 11.4. lenof
+
+Retorna o comprimento de uma string, lista ou dicionário.
+
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo(lenof("Snask")); # Saída: 5  shoo(lenof([1, 2, 3])); # Saída: 3  shoo(lenof({"a": 1, "b": 2})); # Saída: 2   `
+
+### 11.5. typeis
+
+Retorna o tipo Snask (como uma string) de um dado valor.
+
+Snippet de código
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shoo(typeis(123)); # Saída: int  shoo(typeis("olá")); # Saída: str  shoo(typeis(true)); # Saída: bool  shoo(typeis([1,2])); # Saída: list   `
+
+12\. Detalhes do Intérprete
+---------------------------
+
+A classe SnaskInterpreter estende o Transformer do Lark e é responsável por avaliar a AST gerada pela gramática Snask.
+
+*   **\_\_init\_\_(self, parser=None)**: Inicializa o ambiente do interpretador, armazenamento de funções e flags de controle.
+    
+    *   self.env: Um dicionário que armazena variáveis e suas propriedades (tipo, valor, status de constante).
+        
+    *   self.functions: Um dicionário que armazena funções declaradas (parâmetros, tipo de retorno, nó AST do corpo).
+        
+    *   self.returning: Uma flag para gerenciar o 'return' de função e 'breaky' de laço.
+        
+    *   self.return\_value: Armazena o valor retornado por uma função.
+        
+    *   self.\_is\_break\_signal, self.\_is\_skip\_signal: Flags internas para breaky e skipit respectivamente.
+        
+*   **\_resolve(self, val)**: Resolve recursivamente um nó AST ou token em seu valor Python correspondente. Ele lida com literais, busca de variáveis e avaliação de expressões.
+    
+*   **\_execute(self, stmt\_node)**: Executa um único nó de instrução, despachando para o método transformador apropriado com base no atributo data do nó.
+    
+*   **\_execute\_tree(self, tree)**: Itera e executa todas as instruções dentro de uma dada tree AST.
+    
+*   **\_check\_type(self, value, expected\_str\_type)**: Função auxiliar interna para validar se um value Python corresponde a um expected\_str\_type (ex: "int", "str", "list").
+    
+*   **\_execute\_function\_body(self, func\_name, func\_def, resolved\_args)**: Gerencia a execução do corpo de uma função, incluindo a configuração de seu escopo local para parâmetros, a execução de instruções e o tratamento de retornos. Ele cria uma cópia do ambiente para variáveis e parâmetros locais.
