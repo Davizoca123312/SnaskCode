@@ -1,6 +1,6 @@
 # 📘 SnaskLang: Manual de Referência
 
-Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida de médio a baixo nível que combina simplicidade com poder expressivo — e acesso direto à memória!
+Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida de alto nível que combina simplicidade com poder expressivo!
 
 ---
 
@@ -49,7 +49,7 @@ Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida 
   - [Funções de Memória](#funções-de-memória)
 
 ## Introdução
-Snask é uma linguagem criada para ser ao mesmo tempo divertida e poderosa. Ideal para programadores que querem o controle de C com a leveza de Python... e um pouco de caos.
+Snask é uma linguagem criada para ser ao mesmo tempo divertida e poderosa. Ideal para programadores que querem a leveza de Python.
 
 ## Fundamentos da Linguagem
 
@@ -57,7 +57,7 @@ Snask é uma linguagem criada para ser ao mesmo tempo divertida e poderosa. Idea
 Use `#` para escrever comentários de linha única.
 
 ### Tipos de Dados
-Suporta `int`, `float`, `str`, `bool`, `list`, `dict`, `void`, `any` e `module`.
+Suporta `int`, `float`, `str`, `bool`, `list`, `dict`, `void`, `any`.
 
 ### Variáveis e Constantes
 
@@ -217,10 +217,74 @@ dados["idade"]
 (leitura e escrita de arquivos — a ser documentado)
 
 ### to use
-Importa biblioteca externa:
+Importa bibliotecas Snask (`.snask`). Ao importar um módulo Snask, ele é executado em um escopo isolado, e suas funções e variáveis declaradas ficam acessíveis através do nome do módulo.
+
 ```snask
-to use "minha_bib.snask"
+to use "minha_bib"
 ```
+
+**Acesso a Membros de Módulos:**
+Após importar um módulo, você pode acessar suas funções e variáveis usando a sintaxe `nome_do_modulo.membro`.
+
+**Exemplo com Módulo Snask (`minha_bib.snask`):**
+
+`minha_bib.snask`:
+```snask
+craft saudacao(nome s) -> void
+  shoo("Olá do módulo: {}", .cdr{nome})
+done
+
+make versao s = "1.0"
+```
+
+Seu código principal:
+```snask
+to use "minha_bib"
+
+call minha_bib.saudacao("Snasker")
+shoo("Versão do módulo: {}", .cdr{minha_bib.versao})
+```
+
+**Exemplo com Módulo Python (`math`):**
+```snask
+to use "math"
+
+make raiz f = call math.sqrt(25)
+shoo("Raiz quadrada: {}", .cdr{raiz})
+```
+
+## SnaskPack: Gerenciador de Pacotes Snask
+
+SnaskPack é o gerenciador de pacotes oficial do Snask, permitindo que você instale e gerencie bibliotecas Snask de forma fácil.
+
+### Instalando Pacotes
+
+Para instalar um pacote Snask, use o script `snaskpack.py` na raiz do seu projeto:
+
+```bash
+python snaskpack.py install <nome_do_pacote>
+```
+
+Isso simulará o download e a instalação do pacote no diretório `snask_packages/`.
+
+### Estrutura de um Pacote Snask
+
+Um pacote Snask é uma pasta com a seguinte estrutura:
+
+```
+nome_do_pacote/
+├── main.snask          # Arquivo principal da biblioteca
+├── snaskpack.json      # Metadados do pacote (nome, versão, descrição, dependências)
+└── src/                # Outros arquivos .snask da biblioteca (opcional)
+```
+
+Você pode então importar o pacote em seu código Snask usando o comando `to use`:
+
+```snask
+to use "nome_do_pacote"
+```
+
+---
 
 ## Funções Embutidas
 
@@ -230,13 +294,31 @@ lenof minhaLista
 typeis minhaVar
 ```
 
-### toupper, tolower, startswith, endswith
+### toupper, tolower, startswith, endswith, chop, glue, swap, snip, finds
 ```snask
 toupper("oi")
 tolower("OI")
 startswith("banana", "ba")
 endswith("banana", "na")
+chop("um,dois,tres", ",") # Divide uma string em uma lista de substrings
+glue(["um", "dois", "tres"], "-") # Une elementos de uma lista em uma string
+swap("hello world", "world", "Snask") # Substitui ocorrências de uma substring
+snip("   espacos   ") # Remove espaços em branco do início e fim da string
+finds("abacate", "baca") # Verifica se uma string contém uma substring
 ```
+
+### Coleções (Funções Adicionais)
+- `toss(list, element)`: Joga fora a primeira ocorrência de um elemento da lista.
+- `pluck(list, index)`: Arranca um elemento da lista em um índice específico.
+- `tuck(list, index, element)`: Enfia um elemento na lista em um índice específico.
+- `order(list)`: Coloca os elementos da lista em ordem.
+- `locks(dict)`: Retorna uma lista com as chaves (fechaduras) de um dicionário.
+- `treasures(dict)`: Retorna uma lista com os valores (tesouros) de um dicionário.
+
+### Operações Matemáticas (Funções Adicionais)
+- `straighten(number)`: Endireita um número (retorna o valor absoluto).
+- `smooth(number)`: Suaviza um número (arredonda).
+
 
 ### jsonparse e httpget
 ```snask
@@ -244,17 +326,7 @@ jsonparse("{\"a\": 1}")
 httpget("https://api.exemplo.com")
 ```
 
-### Funções de Memória
-- `grabbox`, `letgo`, `reshuffle`
-- `dropbyte`, `peekbyte`, `dropword`, `peekword`
-- `write_c_string`, `read_c_string`
-- `clonemem`, `paintmem`, `matchmem`
-- `manual_grabbox`, `allocsize`
-```snask
-grabbox buffer = grabbox 16
-dropbyte buffer, 0, 65
-letgo buffer
-```
+
 
 ---
 
