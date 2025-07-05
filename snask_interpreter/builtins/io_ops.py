@@ -58,13 +58,11 @@ class IOOperations:
      entrada = input()
      valor = self._converter_input(entrada, expected_type)
 
-     self.environment[var_name] = {
+     self.env[var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False
      }
-
-     debug_print(f"input_stmt: '{var_name}' <- {valor} ({expected_type})")
 
     def inputnum_stmt(self, items):
      name_token, type_node = items
@@ -82,13 +80,11 @@ class IOOperations:
      except ValueError:
         raise TypeError(f"Valor inválido para tipo '{expected_type}': {entrada}")
 
-     self.environment[var_name] = {
+     self.env[var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False
      }
-
-     debug_print(f"inputnum_stmt: '{var_name}' <- {valor} ({expected_type})")
 
     def inputtxt_stmt(self, items):
      name_token, type_node = items
@@ -104,13 +100,11 @@ class IOOperations:
      if expected_type != "str":
         raise TypeError(f"grabtxt só aceita tipo 'str', mas recebeu '{expected_type}'")
 
-     self.environment[var_name] = {
+     self.env[var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False
     }
-
-     debug_print(f"inputtxt_stmt: '{var_name}' <- {valor} ({expected_type})")
 
     def cdr_chain(self, items):
      resolved = []

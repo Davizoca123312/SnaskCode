@@ -1,0 +1,19 @@
+craft create_window(title s, width i, height i) -> void:
+    window title width height
+done
+
+craft create_button(text s, callback_func_name s) -> void:
+    button text callback_func_name
+done
+
+craft create_label(text s) -> void:
+    label text
+done
+
+craft create_entry() -> void:
+    entry
+done
+
+craft start_gui_loop() -> void:
+    start_gui_loop
+done

@@ -14,10 +14,12 @@ from snask_interpreter.language_features.file_io import FileIOHandler
 from snask_interpreter.language_features.time_ops import TimeOperationsHandler
 from snask_interpreter.language_features.type_conversion import TypeConversionHandler
 from snask_interpreter.language_features.library_management import LibraryManager
+from snask_interpreter.language_features.gui_ops import GuiOperationsHandler
 from snask_interpreter.builtins.string_ops import StringOperations
 from snask_interpreter.builtins.io_ops import IOOperations
 from snask_interpreter.builtins.math_ops import MathOperations
 from snask_interpreter.builtins.literals import LiteralHandlers
+from snask_interpreter.builtins.snask_tkinter_bridge import get_snask_gui_instance
 
 class SnaskInterpreter(Transformer):
     def __init__(self, parser=None):
@@ -29,6 +31,7 @@ class SnaskInterpreter(Transformer):
         self.environment = {}
         self._is_break_signal = False
         self._is_skip_signal = False
+        self._conditional_block_executed = False
         self.reactive_rules = []
         self.triggered_conditions = set()
 
@@ -50,6 +53,17 @@ class SnaskInterpreter(Transformer):
         self.io_ops = IOOperations(self)
         self.math_ops = MathOperations(self)
         self.literal_handlers = LiteralHandlers(self)
+        self.gui_ops_handler = GuiOperationsHandler(self)
+
+    def execute_snask_function_by_name(self, func_name):
+        # Este método será chamado pelo Python para executar uma função Snask
+        debug_print(f"SnaskInterpreter: Recebida chamada de callback para a função Snask: {func_name}")
+        if func_name in self.functions:
+            func_def = self.functions[func_name]
+            # Para callbacks, assumimos que não há argumentos passados do Tkinter para a função Snask
+            self.func_handler._execute_function_body(func_name, func_def, [])
+        else:
+            print(f"ERRO: Função Snask '{func_name}' não encontrada para callback.")
 
     # Métodos que delegam para as classes auxiliares
     def _resolve(self, val): return self.resolver._resolve(val)
@@ -77,10 +91,20 @@ class SnaskInterpreter(Transformer):
 
     # Delegação para ControlFlowHandler
     def when(self, items): return self.control_flow_handler.when(items)
+    def whenn(self, items): return self.control_flow_handler.whenn(items)
+    def whenem(self, items): return self.control_flow_handler.whenem(items)
     def loop_spin(self, items): return self.control_flow_handler.loop_spin(items)
     def loop_loopy(self, items): return self.control_flow_handler.loop_loopy(items)
     def loop_breaky(self, _): return self.control_flow_handler.loop_breaky(_)
     def loop_skipit(self, _): return self.control_flow_handler.loop_skipit(_)
+    def conditional_statement(self, items): return self.executor.conditional_statement(items)
+
+    # Delegação para GuiOperationsHandler
+    def create_window(self, items): return self.gui_ops_handler.create_window_stmt(items)
+    def create_button(self, items): return self.gui_ops_handler.create_button_stmt(items)
+    def create_label(self, items): return self.gui_ops_handler.create_label_stmt(items)
+    def create_entry(self, items): return self.gui_ops_handler.create_entry_stmt(items)
+    def start_gui_loop(self, items): return self.gui_ops_handler.start_gui_loop_stmt(items)
 
     # Delegação para CollectionHandler
     def list_literal(self, items): return self.collection_handler.list_literal(items)

@@ -11,7 +11,7 @@ sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, "snask_packages"))
 from snask_interpreter.core.interpreter import SnaskInterpreter
 
-DEBUG_MODE = True  # ou False, como preferir
+DEBUG_MODE = False  # ou False, como preferir
 
 def carregar_bibliotecas(pasta):
     bibliotecas = {}
@@ -35,7 +35,7 @@ def verificar_se_salvou(filepath):
 def executar_codigo(code, parser, interpreter, bibliotecas):
     try:
         tree = parser.parse(code)
-        interpreter.transform(tree)
+        interpreter._execute_tree(tree)
     except UnexpectedInput as e:
         print("\n🚨 ERRO DE SINTAXE NO CÓDIGO 🚨")
         print(f"Linha: {e.line}, Coluna: {e.column}")
@@ -63,7 +63,7 @@ def main():
     with open(grammar_path, "r", encoding="utf-8") as f:
         grammar = f.read()
 
-    parser = Lark(grammar, parser="lalr")
+    parser = Lark(grammar, parser="lalr", start='start')
     interpreter = SnaskInterpreter(parser)
     bibliotecas = carregar_bibliotecas("libs")
 

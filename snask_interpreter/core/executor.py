@@ -27,6 +27,8 @@ class Executor:
             if method:
                 debug_print(f"_execute: Chamando método do Transformer '{method_name}' para: {stmt_node.data}")
                 method(stmt_node.children)
+            elif method_name == 'print_stmt': # Explicitly handle print_stmt as a statement
+                self.interpreter.io_ops.print_stmt(stmt_node.children)
             else:
                 debug_print(f"_execute: Sem método Transformer para '{method_name}', tentando resolver como expressão.")
                 try:
@@ -39,6 +41,24 @@ class Executor:
             print(f"AVISO: Token '{stmt_node}' encontrado onde uma instrução era esperada. Ignorando.")
         else:
             print(f"AVISO: Objeto inesperado '{stmt_node}' (tipo {type(stmt_node)}) encontrado onde uma instrução era esperada. Ignorando.")
+
+    def conditional_statement(self, items):
+        self.interpreter._conditional_block_executed = False
+        for stmt_node in items:
+            if stmt_node is None:
+                continue # Skip None nodes
+            if not isinstance(stmt_node, Tree):
+                debug_print(f"AVISO: Nó inesperado no conditional_statement: {stmt_node!r} (tipo {type(stmt_node)}). Ignorando.")
+                continue
+
+            if stmt_node.data == 'when':
+                self.interpreter.control_flow_handler.when(stmt_node.children)
+            elif stmt_node.data == 'whenn':
+                self.interpreter.control_flow_handler.whenn(stmt_node.children)
+            elif stmt_node.data == 'whenem':
+                self.interpreter.control_flow_handler.whenem(stmt_node.children)
+            if self.interpreter._conditional_block_executed:
+                break
 
     def _execute_tree(self, tree):
         """ Executa todas as instruções em uma árvore de programa. """

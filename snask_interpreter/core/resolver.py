@@ -47,6 +47,20 @@ class Resolver:
                 else:
                     raise TypeError(f"Tipo de módulo desconhecido para '{module_name}'.")
 
+            elif method_name == "method_call": # New handling for method_call
+                obj_node = val.children[0]
+                method_name_token = val.children[1]
+
+                obj = self._resolve(obj_node)
+                method_name = str(method_name_token.value)
+
+                if not hasattr(obj, method_name):
+                    raise AttributeError(f"Objeto '{obj}' não possui método ou atributo '{method_name}'.")
+
+                member = getattr(obj, method_name)
+                debug_print(f"_resolve: Resolvendo método/atributo '{method_name}' em '{obj}'. Resultado: {member!r}")
+                return member # Return the callable method or attribute value
+
             method = getattr(self.interpreter, method_name, None) # Chamar método no interpretador principal
             if method:
                 debug_print(f"_resolve: Chamando método '{method_name}' para Tree: {val.data}")

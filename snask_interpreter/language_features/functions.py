@@ -86,19 +86,57 @@ class FunctionHandler:
         func_name_token = items[0]
         arg_list_node = items[1] if len(items) > 1 else None
 
-        func_name = str(func_name_token.value)
-        debug_print(f"func_call: Chamando função '{func_name}' como expressão.")
+        if isinstance(func_name_token, Tree) and func_name_token.data == 'module_access_expr':
+            module_name = str(func_name_token.children[0].value)
+            member_name = str(func_name_token.children[1].value)
+            
+            if module_name not in self.env:
+                raise NameError(f"Módulo '{module_name}' não encontrado.")
 
-        if func_name not in self.functions:
-            raise NameError(f"Função '{func_name}' não definida.")
+            module_info = self.env[module_name]
+            resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_list_node.children] if arg_list_node else []
 
-        func_def = self.functions[func_name]
-        resolved_args = []
+            if module_info["type"] == "python_module":
+                python_module = module_info["value"]
+                if not hasattr(python_module, member_name):
+                    raise AttributeError(f"Módulo Python '{module_name}' não possui membro '{member_name}'.")
+                
+                member = getattr(python_module, member_name)
+                if callable(member):
+                    debug_print(f"Chamando método Python '{module_name}.{member_name}' com args: {resolved_args}")
+                    return member(*resolved_args)
+                else:
+                    debug_print(f"Acessando atributo Python '{module_name}.{member_name}'")
+                    return member
+            elif module_info["type"] == "module": # Módulo Snask
+                module_env = module_info["value"]["env"]
+                module_functions = module_info["value"]["functions"]
 
-        if arg_list_node:
-             resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_list_node.children]
-        
-        return self._execute_function_body(func_name, func_def, resolved_args)
+                if member_name not in module_functions:
+                    raise NameError(f"Função '{member_name}' não definida no módulo Snask '{module_name}'.")
+                
+                func_def = module_functions[member_name]
+                original_env = self.interpreter.env
+                self.interpreter.env = module_env
+                result = self._execute_function_body(member_name, func_def, resolved_args)
+                self.interpreter.env = original_env
+                return result
+            else:
+                raise TypeError(f"Tipo de módulo desconhecido para '{module_name}': {module_info['type']}")
+        else:
+            func_name = str(func_name_token.value)
+            debug_print(f"func_call: Chamando função '{func_name}' como expressão.")
+
+            if func_name not in self.functions:
+                raise NameError(f"Função '{func_name}' não definida.")
+
+            func_def = self.functions[func_name]
+            resolved_args = []
+
+            if arg_list_node:
+                 resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_list_node.children]
+            
+            return self._execute_function_body(func_name, func_def, resolved_args)
 
     def func_call_stmt(self, items):
         debug_print(f"func_call_stmt: Executando chamada de função como instrução.")

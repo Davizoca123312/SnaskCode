@@ -14,8 +14,11 @@ class ControlFlowHandler:
         condition_result = self._resolve(condition_node)
         debug_print(f"when: Resultado da condição: {condition_result!r} (tipo: {type(condition_result)})")
 
+        debug_print(f"when: Condição avaliada: {condition_result}")
+        debug_print(f"when: _conditional_block_executed antes: {self.interpreter._conditional_block_executed}")
         if condition_result:
             debug_print(f"when: Condição VERDADEIRA. Executando corpo...")
+            self.interpreter._conditional_block_executed = True
             for stmt_node in body_statements:
                 self._execute(stmt_node)
                 if self.interpreter.returning or self.interpreter._is_break_signal or self.interpreter._is_skip_signal:
@@ -23,7 +26,42 @@ class ControlFlowHandler:
                     break 
         else:
             debug_print(f"when: Condição FALSA. Corpo não será executado.")
+            self.interpreter._conditional_block_executed = False
+        debug_print(f"when: _conditional_block_executed depois: {self.interpreter._conditional_block_executed}")
         
+    def whenn(self, items):
+        condition_node = items[0]
+        body_statements = items[1:]
+
+        debug_print(f"whenn: Avaliando condição: {condition_node!r}")
+        condition_result = self._resolve(condition_node)
+        debug_print(f"whenn: Resultado da condição: {condition_result!r} (tipo: {type(condition_result)})")
+
+        if not self.interpreter._conditional_block_executed and condition_result:
+            debug_print(f"whenn: Condição VERDADEIRA e bloco anterior NÃO executado. Executando corpo...")
+            self.interpreter._conditional_block_executed = True
+            for stmt_node in body_statements:
+                self._execute(stmt_node)
+                if self.interpreter.returning or self.interpreter._is_break_signal or self.interpreter._is_skip_signal:
+                    debug_print(f"whenn: Saindo do corpo do 'whenn' devido a returning/break/skip.")
+                    break
+        else:
+            debug_print(f"whenn: Condição FALSA ou bloco anterior JÁ executado. Corpo não será executado.")
+
+    def whenem(self, items):
+        body_statements = items
+
+        debug_print(f"whenem: Verificando se bloco anterior foi executado.")
+        if not self.interpreter._conditional_block_executed:
+            debug_print(f"whenem: Nenhum bloco anterior executado. Executando corpo...")
+            for stmt_node in body_statements:
+                self._execute(stmt_node)
+                if self.interpreter.returning or self.interpreter._is_break_signal or self.interpreter._is_skip_signal:
+                    debug_print(f"whenem: Saindo do corpo do 'whenem' devido a returning/break/skip.")
+                    break
+        else:
+            debug_print(f"whenem: Bloco anterior JÁ executado. Corpo não será executado.")
+
     def loop_spin(self, items):
         condition_node = items[0]
         body_statements = items[1:]

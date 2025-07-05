@@ -23,7 +23,7 @@
      | loop_loopy
      | loop_breaky
      | loop_skipit
-     | when_stmt
+     | conditional_statement
 
      // ===== COLEÇÕES =====
      | pack_decl
@@ -38,6 +38,20 @@
      | convert_stmt
      | use_lib_stmt
      | file_stmt
+     | gui_stmt
+
+// ===== GUI =====
+gui_stmt: create_window_stmt
+        | create_button_stmt
+        | create_label_stmt
+        | create_entry_stmt
+        | start_gui_loop_stmt
+
+create_window_stmt: "window" string NUMBER NUMBER
+create_button_stmt: "button" string string
+create_label_stmt: "label" string
+create_entry_stmt: "entry"
+start_gui_loop_stmt: "start_gui_loop"
 
      // ===== MÉDIO NÍVEL =====
      | grabbox_stmt
@@ -58,7 +72,7 @@
      | writecstring_stmt
 
 // ===== IMPORTAÇÃO =====
-use_lib_stmt: "to" "use" NAME           -> use_lib
+use_lib_stmt: "to" "use" string           -> use_lib
 
 // ===== ARQUIVOS =====
 file_stmt: file_read_stmt | file_write_stmt
@@ -82,11 +96,18 @@ inputtxt_stmt: "grabtxt" NAME ":" type
 // ===== FUNÇÕES =====
 func_decl: "craft" NAME "(" [param ("," param)*] ")" "->" type ":" stmt+ "done" -> craft
 param: NAME ":" type
-func_call: NAME "(" [expr ("," expr)*] ")"
+func_call: (NAME | module_access | method_call) "(" [expr ("," expr)*] ")"
+
+method_call: expr "." NAME
 return_stmt: "back" expr
 
 // ===== CONTROLE DE FLUXO =====
-when_stmt: "when" expr "{" stmt+ "}" -> when
+conditional_statement: when_block whenn_block* whenem_block?
+
+when_block: "when" expr "{" stmt+ "}" -> when
+whenn_block: "whenn" expr "{" stmt+ "}" -> whenn
+whenem_block: "whenem" "{" stmt+ "}" -> whenem
+
 loop_spin: "spin" expr ":" stmt+
 loop_loopy: "loopy" ":" stmt+
 loop_breaky: "breaky"
@@ -163,6 +184,7 @@ bitclap_stmt: NAME "=" "bitclap" expr "and" expr -> bitclap_stmt
      | "smooth" "(" expr ")"               -> smooth
      
      | atom
+     | module_access
 
 
 
@@ -172,12 +194,13 @@ bitclap_stmt: NAME "=" "bitclap" expr "and" expr -> bitclap_stmt
      | NAME "[" expr "]" -> index_access
      | "httpget" "(" expr ")" -> httpget
      | NUMBER
+     | FLOAT_NUMBER // Adicionado suporte a números de ponto flutuante
      | string
      | NAME
      | "(" expr ")"
 
 // ===== TIPOS =====
-type: INT_TYPE | STR_TYPE | LIST_TYPE | DICT_TYPE | BOOL_TYPE
+type: INT_TYPE | STR_TYPE | LIST_TYPE | DICT_TYPE | BOOL_TYPE | FLOAT_TYPE | VOID_TYPE
 
 module_access: NAME "." NAME -> module_access_expr
 
@@ -194,6 +217,10 @@ STR_TYPE: "str"
 LIST_TYPE: "list"
 DICT_TYPE: "dict"
 BOOL_TYPE: "bool"
+FLOAT_TYPE: "float" // Definição do tipo float
+VOID_TYPE: "void"
+
+FLOAT_NUMBER: /(\d+\.\d*|\.\d+)([eE][+-]?\d+)?/ // Regex para números de ponto flutuante
 
 COMMENT: /#[^\n]*/
 %ignore COMMENT

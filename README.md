@@ -44,6 +44,12 @@ Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida 
 - [Arquivos e Bibliotecas](#arquivos-e-bibliotecas)
   - [readfile e writefile](#readfile-e-writefile)
   - [to use](#to-use)
+- [Interface Gráfica (GUI)](#interface-gráfica-gui)
+  - [create_window](#create_window)
+  - [create_button](#create_button)
+  - [create_label](#create_label)
+  - [create_entry](#create_entry)
+  - [start_gui_loop](#start_gui_loop)
 - [Funções Embutidas](#funções-embutidas)
   - [lenof e typeis](#lenof-e-typeis)
   - [toupper, tolower, startswith, endswith](#toupper-tolower-startswith-endswith)
@@ -279,6 +285,86 @@ to use "math"
 
 make raiz f = call math.sqrt(25)
 shoo("Raiz quadrada: {}", .cdr{raiz})
+```
+
+## Arquivos e Bibliotecas
+
+### readfile e writefile
+(leitura e escrita de arquivos — a ser documentado)
+
+### to use
+Importa bibliotecas Snask (`.snask`). Ao importar um módulo Snask, ele é executado em um escopo isolado, e suas funções e variáveis declaradas ficam acessíveis através do nome do módulo.
+
+```snask
+to use "minha_bib"
+```
+
+**Acesso a Membros de Módulos:**
+Após importar um módulo, você pode acessar suas funções e variáveis usando a sintaxe `nome_do_modulo.membro`.
+
+**Exemplo com Módulo Snask (`minha_bib.snask`):**
+
+`minha_bib.snask`:
+```snask
+craft saudacao(nome s) -> void
+  shoo("Olá do módulo: {}", .cdr{nome})
+done
+
+make versao s = "1.0"
+```
+
+Seu código principal:
+```snask
+to use "minha_bib"
+
+call minha_bib.saudacao("Snasker")
+shoo("Versão do módulo: {}", .cdr{minha_bib.versao})
+```
+
+**Exemplo com Módulo Python (`math`):**
+```snask
+to use "math"
+
+make raiz f = call math.sqrt(25)
+shoo("Raiz quadrada: {}", .cdr{raiz})
+```
+
+## Interface Gráfica (GUI)
+
+A biblioteca `snask_gui` permite criar interfaces gráficas simples usando o Tkinter do Python. Para usá-la, importe-a com `to use "snask_gui"`.
+
+### create_window
+Cria uma nova janela.
+```snask
+call snask_gui.create_window("Minha Janela", 400, 300)
+```
+
+### create_button
+Cria um botão na janela. O `callback_func_name` é o nome de uma função Snask que será "chamada" (simulada por enquanto) quando o botão for clicado.
+```snask
+craft minha_acao() -> void:
+  shoo("Botão clicado!")
+done
+
+call snask_gui.create_button("Clique Aqui", "minha_acao")
+```
+
+### create_label
+Cria um rótulo de texto na janela.
+```snask
+call snask_gui.create_label("Olá, GUI Snask!")
+```
+
+### create_entry
+Cria um campo de entrada de texto na janela.
+```snask
+call snask_gui.create_entry()
+```
+
+### start_gui_loop
+Inicia o loop principal da interface gráfica. Esta função deve ser chamada no final do seu script GUI Snask.
+```snask
+call snask_gui.start_gui_loop()
 ```
 
 ## SnaskPack: Gerenciador de Pacotes Snask
