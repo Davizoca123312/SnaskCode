@@ -25,6 +25,8 @@ Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida 
   - [Chamadas de Função](#chamadas-de-função)
 - [Controle de Fluxo](#controle-de-fluxo)
   - [when](#when)
+  - [whenn](#whenn)
+  - [whenem](#whenem)
   - [spin](#spin)
   - [loopy](#loopy)
   - [breaky e skipit](#breaky-e-skipit)
@@ -90,23 +92,24 @@ zap x
 ### shoo
 Imprime na tela:
 ```snask
-shoo("Resultado: {} {}", .cdr{x, y})
+shoo("Olá, mundo!")
+shoo(minhaVariavel)
 ```
 
 ### grab
-Recebe entrada genérica:
+Recebe entrada genérica e armazena na variável especificada no ambiente global:
 ```snask
 grab nome s
 ```
 
 ### grabnum
-Recebe número do usuário:
+Recebe um número do usuário e armazena na variável especificada no ambiente global:
 ```snask
 grabnum idade i
 ```
 
 ### grabtxt
-Recebe texto:
+Recebe texto do usuário e armazena na variável especificada no ambiente global:
 ```snask
 grabtxt frase s
 ```
@@ -139,6 +142,31 @@ Condicional (como `if`):
 ```snask
 when x > 5 {
   shoo("Maior que 5")
+}
+```
+
+### whenn
+Condicional "else if". Executa se a condição for verdadeira e nenhum `when` ou `whenn` anterior na mesma estrutura condicional tiver sido executado:
+```snask
+when x > 5 {
+  shoo("Maior que 5")
+}
+whenn x == 5 {
+  shoo("Igual a 5")
+}
+```
+
+### whenem
+Condicional "else". Executa se nenhum `when` ou `whenn` anterior na mesma estrutura condicional tiver sido executado:
+```snask
+when x > 5 {
+  shoo("Maior que 5")
+}
+whenn x == 5 {
+  shoo("Igual a 5")
+}
+whenem {
+  shoo("Menor que 5")
 }
 ```
 
