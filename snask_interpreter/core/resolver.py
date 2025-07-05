@@ -1,0 +1,82 @@
+from lark import Tree, Token
+from snask_interpreter.utils.debug import debug_print
+import types # Importar para verificar tipo de módulo Python
+
+class Resolver:
+    def __init__(self, interpreter):
+        self.interpreter = interpreter
+        self.env = interpreter.env
+        self.functions = interpreter.functions
+        self.type_checker = interpreter.type_checker # Acesso ao TypeChecker
+
+    def _resolve(self, val):
+        debug_print(f"_resolve: Recebido: {val!r} (tipo: {type(val)})")
+        if isinstance(val, Tree):
+            method_name = val.data
+            if method_name == "module_access_expr":
+                module_name_token = val.children[0]
+                member_name_token = val.children[1]
+
+                module_name = str(module_name_token.value)
+                member_name = str(member_name_token.value)
+
+                if module_name not in self.env:
+                    raise NameError(f"Módulo '{module_name}' não encontrado.")
+                
+                module_info = self.env[module_name]
+                if module_info["type"] != "module":
+                    raise TypeError(f"'{module_name}' não é um módulo.")
+                
+                module_obj = module_info["value"]
+
+                # Tenta acessar membro de módulo Python
+                if isinstance(module_obj, types.ModuleType):
+                    if hasattr(module_obj, member_name):
+                        return getattr(module_obj, member_name)
+                    else:
+                        raise AttributeError(f"Módulo Python '{module_name}' não possui membro '{member_name}'.")
+                # Tenta acessar membro de módulo Snask
+                elif isinstance(module_obj, dict) and "env" in module_obj and "functions" in module_obj:
+                    if member_name in module_obj["env"]:
+                        return module_obj["env"][member_name]["value"]
+                    elif member_name in module_obj["functions"]:
+                        # Retorna a definição da função para que possa ser chamada
+                        return module_obj["functions"][member_name]
+                    else:
+                        raise NameError(f"Módulo Snask '{module_name}' não possui membro '{member_name}'.")
+                else:
+                    raise TypeError(f"Tipo de módulo desconhecido para '{module_name}'.")
+
+            method = getattr(self.interpreter, method_name, None) # Chamar método no interpretador principal
+            if method:
+                debug_print(f"_resolve: Chamando método '{method_name}' para Tree: {val.data}")
+                result = method(val.children)
+                debug_print(f"_resolve: Método '{method_name}' retornou: {result!r}")
+                return result
+            else:
+                raise ValueError(f"Nó da árvore com 'data' desconhecido ou não avaliável: {method_name}")
+
+        elif isinstance(val, Token):
+            debug_print(f"_resolve: Processando Token: {val.type} '{val.value}'")
+            if val.type == "NUMBER":
+                v_str = str(val.value)
+                return float(v_str) if '.' in v_str or 'e' in v_str.lower() else int(v_str)
+            elif val.type == "ESCAPED_STRING":
+                return val.value
+            elif val.type == "STRING":
+                return str(val.value[1:-1].encode('utf-8').decode('unicode_escape'))
+            elif val.type == "NAME":
+                varname = val.value
+                if varname in self.env:
+                    return self.env[varname]["value"]
+                elif varname == "true": return True
+                elif varname == "false": return False
+                elif varname in self.functions:
+                    raise NameError(f"Tentativa de usar função '{varname}' como variável. Para chamar, use 'call {varname}(...)'.")
+                raise NameError(f"Variável ou nome '{varname}' não encontrado.")
+            else:
+                debug_print(f"_resolve: Token não tratado especificamente, retornando valor: {val.value!r}")
+                return val.value
+
+        debug_print(f"_resolve: Valor já é Python, retornando: {val!r}")
+        return val

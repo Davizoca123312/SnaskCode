@@ -1,0 +1,199 @@
+// ===== RAIZ =====
+?start: stmt+
+
+// ===== DECLARAÇÕES =====
+?stmt: var_decl
+     | var_set
+     | var_zap
+     | const_decl
+
+     // ===== ENTRADA E SAÍDA =====
+     | print_stmt
+     | input_stmt
+     | inputnum_stmt
+     | inputtxt_stmt
+
+     // ===== FUNÇÕES =====
+     | func_decl
+     | func_call
+     | return_stmt
+
+     // ===== CONTROLE DE FLUXO =====
+     | loop_spin
+     | loop_loopy
+     | loop_breaky
+     | loop_skipit
+     | when_stmt
+
+     // ===== COLEÇÕES =====
+     | pack_decl
+     | pack_add
+     | pack_get
+     | box_decl
+     | box_put
+     | box_get
+
+     // ===== ARQUIVOS / TEMPO / CONVERSÃO / LIB =====
+     | wait_stmt
+     | convert_stmt
+     | use_lib_stmt
+     | file_stmt
+
+     // ===== MÉDIO NÍVEL =====
+     | grabbox_stmt
+     | manual_grabbox_stmt
+     | reshuffle_stmt
+     | letgo_stmt
+     | paintmem_stmt
+     | clonemem_stmt
+     | matchmem_stmt
+     | bitclap_stmt
+     | allocsize_stmt
+
+     // ===== BAIXO / EXTREMAMENTE BAIXO NÍVEL =====
+     | dropbyte_stmt
+     | peekbyte_stmt
+     | dropword_stmt
+     | peekword_stmt
+     | writecstring_stmt
+
+// ===== IMPORTAÇÃO =====
+use_lib_stmt: "to" "use" NAME           -> use_lib
+
+// ===== ARQUIVOS =====
+file_stmt: file_read_stmt | file_write_stmt
+file_read_stmt: "readfile" NAME "to" NAME
+file_write_stmt: "writefile" NAME "with" expr
+
+// ===== VARIÁVEIS =====
+var_decl: "make" NAME ":" type "=" expr
+var_set: "set" NAME "=" expr
+var_zap: "zap" NAME ":" expr
+const_decl: "keep" NAME ":" type "=" expr
+
+// ===== ENTRADA E SAÍDA =====
+print_stmt: "shoo" "(" expr ")" [cdr_chain]
+cdr_chain: ".cdr" "{" [expr ("," expr)*] "}"          -> cdr_chain
+
+input_stmt: "grab" NAME ":" type
+inputnum_stmt: "grabnum" NAME ":" type
+inputtxt_stmt: "grabtxt" NAME ":" type
+
+// ===== FUNÇÕES =====
+func_decl: "craft" NAME "(" [param ("," param)*] ")" "->" type ":" stmt+ "done" -> craft
+param: NAME ":" type
+func_call: NAME "(" [expr ("," expr)*] ")"
+return_stmt: "back" expr
+
+// ===== CONTROLE DE FLUXO =====
+when_stmt: "when" expr "{" stmt+ "}" -> when
+loop_spin: "spin" expr ":" stmt+
+loop_loopy: "loopy" ":" stmt+
+loop_breaky: "breaky"
+loop_skipit: "skipit"
+
+// ===== LISTAS (packs) =====
+pack_decl: "pack" NAME ":" type "=" list_literal -> pack_decl
+pack_add: "packadd" NAME expr
+pack_get: "packget" NAME expr
+list_literal: "[" [expr ("," expr)*] "]"
+
+// ===== DICIONÁRIOS (boxes) =====
+box_decl: "box" NAME ":" type "=" "{" [NAME ":" expr ("," NAME ":" expr)*] "}"
+box_put: "boxput" NAME NAME expr
+box_get: "boxget" NAME NAME
+
+// ===== TEMPO =====
+wait_stmt: "snooze" expr
+
+// ===== CONVERSÃO =====
+convert_stmt: "convert" NAME "to" type -> convert
+
+// ===== FUNÇÕES BAIXO NÍVEL =====
+grabbox_stmt: "grabbox" NAME "=" "grabbox" expr -> grabbox_stmt
+manual_grabbox_stmt: "grabbox" NAME "=" "at" NUMBER "size" NUMBER -> manual_grabbox_stmt
+letgo_stmt: "letgo" NAME -> letgo_stmt
+reshuffle_stmt: "reshuffle" NAME "into" expr -> reshuffle_stmt
+allocsize_stmt: NAME "=" "allocsize" NAME -> allocsize_stmt
+
+dropbyte_stmt: "dropbyte" NAME "at" expr "is" expr -> dropbyte_stmt
+peekbyte_stmt: NAME "=" "peekbyte" NAME "at" expr -> peekbyte_stmt
+dropword_stmt: "dropword" NAME "at" expr "is" expr -> dropword_stmt
+peekword_stmt: NAME "=" "peekword" NAME "at" expr -> peekword_stmt
+
+writecstring_stmt: "writecstring" NAME "with" expr -> write_c_string_stmt
+
+paintmem_stmt: "paintmem" NAME "with" expr "for" expr -> paintmem_stmt
+clonemem_stmt: "clonemem" "from" NAME "to" NAME "size" expr -> clonemem_stmt
+matchmem_stmt: NAME "=" "matchmem" NAME NAME "size" expr -> matchmem_stmt
+
+bitclap_stmt: NAME "=" "bitclap" expr "and" expr -> bitclap_stmt
+
+// ===== EXPRESSÕES =====
+?expr: expr "is" expr                 -> is_
+     | expr "aint" expr              -> aint
+     | expr "over" expr              -> over
+     | expr "under" expr             -> lt
+     | expr "overeq" expr            -> gte
+     | expr "undereq" expr           -> lte
+     | expr "==" expr                -> eq
+     | expr "+" expr                 -> add
+     | expr "-" expr                 -> sub
+     | expr "*" expr                 -> mul
+     | expr "/" expr                 -> div
+     | "packget" NAME expr           -> pack_get
+     | "lenof" "(" expr ")"          -> lenof
+     | "typeis" "(" expr ")"         -> typeis
+     | "toupper" "(" expr ")"        -> toupper
+     | "tolower" "(" expr ")"        -> tolower
+     | "startswith" "(" expr "," expr ")" -> startswith
+     | "endswith" "(" expr "," expr ")"   -> endswith
+     | "chop" "(" expr "," expr ")"      -> chop
+     | "glue" "(" expr "," expr ")"       -> glue
+     | "swap" "(" expr "," expr "," expr ")" -> swap
+     | "snip" "(" expr ")"                -> snip
+     | "finds" "(" expr "," expr ")"   -> finds
+     | "toss" "(" expr "," expr ")"     -> toss
+     | "pluck" "(" expr "," expr ")"        -> pluck
+     | "tuck" "(" expr "," expr "," expr ")" -> tuck
+     | "order" "(" expr ")"                -> order
+     | "locks" "(" expr ")"                -> locks
+     | "treasures" "(" expr ")"              -> treasures
+     | "straighten" "(" expr ")"                 -> straighten
+     | "smooth" "(" expr ")"               -> smooth
+     
+     | atom
+
+
+
+?atom: "[" [expr ("," expr)*] "]" -> list_literal
+     | "{" [NAME ":" expr ("," NAME ":" expr)*] "}" -> dict_literal
+     | func_call
+     | NAME "[" expr "]" -> index_access
+     | "httpget" "(" expr ")" -> httpget
+     | NUMBER
+     | string
+     | NAME
+     | "(" expr ")"
+
+// ===== TIPOS =====
+type: INT_TYPE | STR_TYPE | LIST_TYPE | DICT_TYPE | BOOL_TYPE
+
+module_access: NAME "." NAME -> module_access_expr
+
+// ===== TOKENS =====
+%import common.CNAME -> NAME
+%import common.NUMBER
+%import common.ESCAPED_STRING
+string: ESCAPED_STRING -> string
+%import common.WS
+%ignore WS
+
+INT_TYPE: "int"
+STR_TYPE: "str"
+LIST_TYPE: "list"
+DICT_TYPE: "dict"
+BOOL_TYPE: "bool"
+
+COMMENT: /#[^\n]*/
+%ignore COMMENT

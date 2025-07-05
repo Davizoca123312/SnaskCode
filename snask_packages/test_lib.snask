@@ -1,0 +1,5 @@
+craft greet_test() -> void
+  shoo("Olá do test_lib! Snask é divertido!")
+done
+
+make test_version s = "1.0.0"
