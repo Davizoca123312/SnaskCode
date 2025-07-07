@@ -90,7 +90,11 @@ class Resolver:
                 varname = val.value
                 for scope in reversed(self.interpreter.env):
                     if varname in scope:
-                        return scope[varname]["value"]
+                        if isinstance(scope[varname], dict) and "value" in scope[varname]:
+                            return scope[varname]["value"]
+                        else:
+                            # If it's not a dict with 'value', return the raw value
+                            return scope[varname]
                 
                 if varname == "true": return True
                 elif varname == "false": return False

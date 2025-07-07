@@ -58,7 +58,7 @@ class IOOperations:
      entrada = input()
      valor = self._converter_input(entrada, expected_type)
 
-     self.env[var_name] = {
+     self.interpreter.env[-1][var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False
@@ -80,7 +80,7 @@ class IOOperations:
      except ValueError:
         raise TypeError(f"Valor inválido para tipo '{expected_type}': {entrada}")
 
-     self.env[var_name] = {
+     self.interpreter.env[-1][var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False
@@ -100,7 +100,7 @@ class IOOperations:
      if expected_type != "str":
         raise TypeError(f"grabtxt só aceita tipo 'str', mas recebeu '{expected_type}'")
 
-     self.env[var_name] = {
+     self.interpreter.env[-1][var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False

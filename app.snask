@@ -1,0 +1,41 @@
+shoo("Bem Vindo a calculadora Snask!")
+shoo("Escolha uma das opções abaixo:")
+shoo("1 - Soma")
+shoo("2 - Subtracaoo")
+shoo("3 - Multiplicacao")
+shoo("4 - Divisao")
+grabnum opcao :int
+
+when opcao == 1{
+    shoo("Digite o primeiro numero:")
+    grabnum num1 :int
+    shoo("Digite o segundo numero:")
+    grabnum num2 :int
+    shoo("Resultado: {}") .cdr{num1 + num2}
+}
+whenn opcao == 2{
+    shoo("Digite o primeiro numero:")
+    grabnum num1 :int
+    shoo("Digite o segundo numero:")
+    grabnum num2 :int
+    shoo("Resultado: {}") .cdr{num1 - num2}
+}
+whenn opcao == 3{
+    shoo("Digite o primeiro numero:")
+    grabnum num1 :int
+    shoo("Digite o segundo numero:")
+    grabnum num2 :int
+    shoo("Resultado: {}") .cdr{num1 * num2}
+}
+whenn opcao == 4{
+    shoo("Digite o primeiro numero:")
+    grabnum num1 :int
+    shoo("Digite o segundo numero:")
+    grabnum num2 :int
+    when num2 == 0 {
+        shoo("Erro: Divisão por zero!")
+    }
+    whenem {
+        shoo("Resultado: {}") .cdr{num1 / num2}
+    }
+}
