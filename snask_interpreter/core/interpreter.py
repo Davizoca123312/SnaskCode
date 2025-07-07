@@ -23,7 +23,7 @@ from snask_interpreter.builtins.snask_tkinter_bridge import get_snask_gui_instan
 
 class SnaskInterpreter(Transformer):
     def __init__(self, parser=None):
-        self.env = {}
+        self.env = [{}] # Stack of scopes, global scope at index 0
         self.functions = {}
         self.returning = False
         self.return_value = None
@@ -54,6 +54,19 @@ class SnaskInterpreter(Transformer):
         self.math_ops = MathOperations(self)
         self.literal_handlers = LiteralHandlers(self)
         self.gui_ops_handler = GuiOperationsHandler(self)
+
+    def push_scope(self, new_scope=None):
+        if new_scope is None:
+            new_scope = {}
+        self.env.append(new_scope)
+        debug_print(f"Scope pushed. Current stack depth: {len(self.env)}")
+
+    def pop_scope(self):
+        if len(self.env) > 1: # Don't pop the global scope
+            self.env.pop()
+            debug_print(f"Scope popped. Current stack depth: {len(self.env)}")
+        else:
+            debug_print("Cannot pop global scope.")
 
     def execute_snask_function_by_name(self, func_name):
         # Este método será chamado pelo Python para executar uma função Snask

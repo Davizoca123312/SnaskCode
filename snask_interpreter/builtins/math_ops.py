@@ -76,6 +76,9 @@ class MathOperations:
     def gte(self, items):
         return self.overeq(items)
 
+    def lte(self, items):
+        return self.undereq(items)
+
     def abs(self, items):
         num = self._resolve(items[0])
         if not isinstance(num, (int, float)):
