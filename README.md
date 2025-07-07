@@ -1,6 +1,7 @@
 # 📘 SnaskLang: Manual de Referência
 
 Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida de alto nível que combina simplicidade com poder expressivo!
+![Snask](snask.png)
 
 ---
 
