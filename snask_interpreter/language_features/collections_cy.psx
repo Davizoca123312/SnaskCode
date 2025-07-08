@@ -1,0 +1,195 @@
+Compreendido. Conforme sua solicitação e as explicações anteriores, vou gerar o conteúdo do arquivo `.pyx` para o seu código `collections.py` com as otimizações e tipagens Cython possíveis.
+
+Lembre-se que você precisará criar um novo arquivo, por exemplo, `collections_cy.pyx`, e colar o conteúdo abaixo nele. Em seguida, precisará de um `setup.py` para compilá-lo.
+
+-----
+
+**Conteúdo para `collections_cy.pyx`:**
+
+```python
+# cython: language_level=3
+# collections_cy.pyx
+
+# Importações de módulos Python normais
+from snask_interpreter.utils.debug import debug_print
+from lark import Token
+
+# Declarações para classes e métodos que serão chamados de Python
+# ou que precisam interagir com objetos Python de forma mais otimizada.
+# Note que a maioria das operações de lista e dicionário são PyObject*
+# e já são otimizadas em C pelo próprio interpretador Python.
+
+class CollectionHandler:
+    # __init__ é um método que será chamado do Python, então 'def' é apropriado.
+    def __init__(self, interpreter):
+        self.interpreter = interpreter
+        self.env = interpreter.env
+        self._resolve = interpreter._resolve
+        self._check_type = interpreter._check_type
+        self.typeis = interpreter.typeis
+
+    # Embora a função processe uma lista, os 'items' podem ser de tipos variados
+    # e a manipulação de strings é uma operação Python.
+    def list_literal(self, items: list):
+        cdef list resolved = []  # Declaramos 'resolved' como uma lista C.
+        cdef object val         # 'val' pode ser de vários tipos, então usamos 'object'.
+        cdef str inner          # Para a string interna, caso seja um val.
+        for item in items:
+            val = self._resolve(item)
+            if isinstance(val, str):
+                # Estas operações com strings ainda são chamadas para a API de string do Python.
+                if val.startswith('"') and val.endswith('"'):
+                    inner = val[1:-1]
+                    if '"' in inner or "'" in inner:
+                        raise ValueError(f"String inválida com aspas extras: {val!r}")
+                    val = inner
+                elif val.count('"') > 0:
+                    raise ValueError(f"String malformada: {val!r} — use aspas apenas ao redor da palavra")
+            resolved.append(val) # 'append' de PyObject é otimizado em C.
+        return resolved
+
+    # pack_get: Otimizamos a tipagem de 'name' e 'index'.
+    def pack_get(self, items: list):
+        cdef Token name_token = items[0]
+        cdef object index_node = items[1] # Pode ser um Token ou outra estrutura
+        cdef str name = str(name_token.value)
+        cdef int index = self._resolve(index_node) # Assumimos que _resolve retorna um int
+
+        if name not in self.env:
+            raise NameError(f"Lista '{name}' não foi declarada.")
+        cdef list lista = self.env[name]["value"] # 'lista' é uma lista Python
+
+        if not isinstance(lista, list):
+            raise TypeError(f"'{name}' não é uma lista.")
+        if not isinstance(index, int):
+            raise TypeError(f"O índice fornecido deve ser inteiro.")
+
+        if index < 0 or index >= len(lista):
+            raise IndexError(f"Índice {index} fora do limite da lista '{name}'.")
+
+        return lista[index] # Acesso ao índice de lista Python é otimizado em C.
+
+    # pack_add: Similar a pack_get.
+    def pack_add(self, items: list):
+        cdef Token name_token = items[0]
+        cdef object element_node = items[1]
+        cdef str name = str(name_token.value)
+
+        if name not in self.env or self.env[name]["type"] != "list":
+            raise NameError(f"'{name}' não é uma lista declarada para pack_add.")
+
+        cdef object element_value = self._resolve(element_node) # Pode ser de qualquer tipo
+        self.env[name]["value"].append(element_value) # 'append' é uma operação otimizada em C.
+
+    # dict_literal: Lida com chaves e valores de tipos variados.
+    def dict_literal(self, items: list):
+        cdef dict d = {} # 'd' é um dicionário Python.
+        cdef int i
+        cdef object key_item # Pode ser Token ou outro objeto
+        cdef object key      # Chave pode ser str ou outro tipo resolvido
+        cdef object value
+
+        for i in range(0, len(items), 2):
+            key_item = items[i]
+            if isinstance(key_item, Token) and key_item.type == "NAME":
+                key = str(key_item.value)
+            elif isinstance(key_item, Token) and key_item.type == "ESCAPED_STRING":
+                key = key_item.value
+            else:
+                key = str(self._resolve(key_item)) # Converte para string para chave
+
+            value = self._resolve(items[i+1])
+            d[key] = value # Operação de dicionário Python.
+        return d
+
+    # box_decl: Similar a pack_add/get.
+    def box_decl(self, items: list):
+        cdef Token name_token = items[0]
+        cdef object dict_expr_node = items[1]
+        cdef str name = str(name_token.value)
+        cdef object value = self._resolve(dict_expr_node) # Espera-se um dict
+
+        if not isinstance(value, dict):
+            raise TypeError(f"box_decl para '{name}' espera um dicionário, recebeu {self.typeis([value])}.")
+        self.env[name] = {"type": "dict", "value": value, "constant": False} # Manipulação de dicionário Python.
+
+    # box_put: Similar.
+    def box_put(self, items: list):
+        cdef Token name_token = items[0]
+        cdef object key_node = items[1]
+        cdef object value_node = items[2]
+        cdef str name = str(name_token.value)
+
+        if name not in self.env or self.env[name]["type"] != "dict":
+            raise NameError(f"'{name}' não é um dicionário declarado para box_put.")
+
+        cdef object key = self._resolve(key_node)
+        cdef object val = self._resolve(value_node)
+        self.env[name]["value"][str(key)] = val # A chave do dicionário é convertida para str.
+
+    # index_access: Acessa coleções variadas.
+    def index_access(self, items: list):
+        cdef object collection = self._resolve(items[0])
+        cdef object index_val = self._resolve(items[1])
+        try:
+            return collection[index_val] # Acesso a item de coleção Python.
+        except (KeyError, IndexError) as e:
+            raise type(e)(f"Erro ao acessar índice/chave '{index_val}' em '{collection!r}': {e}")
+        except TypeError:
+            actual_collection_type = self.typeis([collection])
+            raise TypeError(f"Objeto do tipo '{actual_collection_type}' não suporta indexação (valor: {collection!r}).")
+
+    # remove, pop, insert, sort: Operações de lista Python.
+    def remove(self, items: list):
+        cdef list lst = self._resolve(items[0]) # Espera-se uma lista
+        cdef object element = self._resolve(items[1]) # Elemento pode ser de qualquer tipo
+        if not isinstance(lst, list):
+            raise TypeError("remove espera uma lista como primeiro argumento.")
+        try:
+            lst.remove(element) # Operação de lista Python.
+        except ValueError:
+            raise ValueError(f"Elemento '{element}' não encontrado na lista.")
+
+    def pop(self, items: list):
+        cdef list lst = self._resolve(items[0])
+        cdef int index = self._resolve(items[1]) # Espera-se um int
+        if not isinstance(lst, list):
+            raise TypeError("pop espera uma lista como primeiro argumento.")
+        if not isinstance(index, int):
+            raise TypeError("pop espera um índice inteiro como segundo argumento.")
+        try:
+            return lst.pop(index) # Operação de lista Python.
+        except IndexError:
+            raise IndexError(f"Índice {index} fora do limite da lista para pop.")
+
+    def insert(self, items: list):
+        cdef list lst = self._resolve(items[0])
+        cdef int index = self._resolve(items[1])
+        cdef object element = self._resolve(items[2])
+        if not isinstance(lst, list):
+            raise TypeError("insert espera uma lista como primeiro argumento.")
+        if not isinstance(index, int):
+            raise TypeError("insert espera um índice inteiro como segundo argumento.")
+        lst.insert(index, element) # Operação de lista Python.
+
+    def sort(self, items: list):
+        cdef list lst = self._resolve(items[0])
+        if not isinstance(lst, list):
+            raise TypeError("sort espera uma lista.")
+        try:
+            lst.sort() # Operação de lista Python.
+        except TypeError:
+            raise TypeError("Elementos na lista não são comparáveis para ordenação.")
+
+    # keys, treasures: Operações de dicionário Python.
+    def keys(self, items: list):
+        cdef dict d = self._resolve(items[0]) # Espera-se um dict
+        if not isinstance(d, dict):
+            raise TypeError("keys espera um dicionário.")
+        return list(d.keys()) # Operação de dicionário Python.
+
+    def treasures(self, items: list):
+        cdef dict d = self._resolve(items[0])
+        if not isinstance(d, dict):
+            raise TypeError("treasures espera um dicionário.")
+        return list(d.values()) # Operação de dicionário Python.

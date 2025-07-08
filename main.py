@@ -2,6 +2,12 @@ import sys
 import os
 import time
 from lark import Lark, UnexpectedInput
+import io
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 # Caminho absoluto para o diretório onde este script está
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -11,7 +17,7 @@ sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, "snask_packages"))
 from snask_interpreter.core.interpreter import SnaskInterpreter
 
-DEBUG_MODE = False  # ou False, como preferir
+DEBUG_MODE = False # ou False, como preferir
 
 def carregar_bibliotecas(pasta):
     bibliotecas = {}
@@ -37,13 +43,13 @@ def executar_codigo(code, parser, interpreter, bibliotecas):
         tree = parser.parse(code)
         interpreter._execute_tree(tree)
     except UnexpectedInput as e:
-        print("\n🚨 ERRO DE SINTAXE NO CÓDIGO 🚨")
+        print("ERRO DE SINTAXE NO CÓDIGO")
         print(f"Linha: {e.line}, Coluna: {e.column}")
         print(f"Erro próximo de: {e.get_context(code).strip()}")
         print(f"Detalhes: {e.__class__.__name__}: {str(e).splitlines()[0]}")
         sys.exit(1)
     except Exception as e:
-        print("\n🚨 ERRO INTERNO 🚨")
+        print("\nERRO INTERNO")
         print(f"Erro: {e.__class__.__name__}: {str(e)}")
         sys.exit(1)
 

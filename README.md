@@ -30,6 +30,7 @@ Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida 
   - [spin](#spin)
   - [loopy](#loopy)
   - [breaky e skipit](#breaky-e-skipit)
+  - [for](#for)
 - [Coleções](#coleções)
   - [pack (listas)](#pack-listas)
   - [packadd](#packadd)
@@ -57,7 +58,9 @@ Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida 
   - [Funções de Memória](#funções-de-memória)
 
 ## Introdução
-Snask é uma linguagem criada para ser ao mesmo tempo divertida e poderosa. Ideal para programadores que querem a leveza de Python.
+Snask é uma linguagem de alto nível projetada para o **Desenvolvimento Rápido de Aplicações Interativas e Ferramentas de Automação, com Ênfase na Facilidade de Uso e Prototipagem.**
+
+Com uma sintaxe expressiva e legível, Snask abstrai complexidades e permite que desenvolvedores e entusiastas transformem ideias em protótipos e ferramentas funcionais de forma ágil. Sua capacidade de integrar interfaces gráficas (GUI) de maneira intuitiva a torna ideal para democratizar a criação de software, permitindo que usuários com diferentes níveis de experiência construam suas próprias soluções para automatizar tarefas cotidianas e otimizar fluxos de trabalho.
 
 ## Fundamentos da Linguagem
 
@@ -197,6 +200,18 @@ Interrompe ou pula iteração:
 ```snask
 breaky
 skipit
+```
+
+### for
+Itera sobre os elementos de uma lista ou os caracteres de uma string. A cada iteração, o elemento atual é atribuído à variável especificada.
+```snask
+pack minha_lista: list = ["maçã", "banana", "cereja"]
+for fruta in minha_lista:
+  shoo("Fruta: ", fruta)
+
+make minha_string: str = "Snask"
+for char in minha_string:
+  shoo("Caractere: ", char)
 ```
 
 ## Coleções

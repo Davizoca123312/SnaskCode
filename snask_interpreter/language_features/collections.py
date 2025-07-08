@@ -1,5 +1,6 @@
 from snask_interpreter.utils.debug import debug_print
 from lark import Token
+from lark.tree import Tree
 
 class CollectionHandler:
     def __init__(self, interpreter):
@@ -23,6 +24,25 @@ class CollectionHandler:
                 raise ValueError(f"String malformada: {val!r} — use aspas apenas ao redor da palavra")
         resolved.append(val)
      return resolved
+
+    def pack_decl(self, items):
+        name_token = items[0]
+        type_node = items[1]
+        list_literal_node = items[2]
+
+        name = str(name_token.value)
+        declared_type = self.interpreter.type(type_node.children) if isinstance(type_node, Tree) else str(type_node)
+        resolved_list = self._resolve(list_literal_node)
+
+        if not isinstance(resolved_list, list):
+            raise TypeError(f"pack_decl para '{name}' espera uma lista, mas recebeu {self.interpreter.typeis([resolved_list])}.")
+        
+        # Verifica se o tipo declarado é 'list'
+        if declared_type != "list":
+            raise TypeError(f"Tipo declarado para '{name}' é '{declared_type}', mas o valor é uma lista.")
+
+        self.interpreter.env[-1][name] = {"type": declared_type, "value": resolved_list, "constant": False}
+        debug_print(f"pack_decl: Lista '{name}' definida no ambiente: {self.interpreter.env[-1][name]}")
     
     def pack_get(self, items):
      name_token = items[0]

@@ -119,6 +119,50 @@ class ControlFlowHandler:
                 self.interpreter._is_skip_signal = False
                 continue
 
+    def loop_for(self, items):
+        var_name = str(items[0])
+        iterable_node = items[1]
+        body_statements = items[2:]
+
+        debug_print(f"loop_through: Iterando sobre {iterable_node!r} com variável {var_name}")
+        iterable_collection = self._resolve(iterable_node)
+
+        if not isinstance(iterable_collection, (list, str)):
+            raise TypeError(f"loop_through: O tipo '{type(iterable_collection).__name__}' não é iterável. Esperado 'list' ou 'str'.")
+
+        original_scope = self.interpreter.env[-1].copy()
+
+        for item in iterable_collection:
+            self.interpreter.env[-1][var_name] = item
+            debug_print(f"loop_through: Variável '{var_name}' definida como '{item}'")
+
+            for stmt_node in body_statements:
+                self._execute(stmt_node)
+
+                if self.interpreter._is_skip_signal:
+                    debug_print(f"loop_through: 'skipit' detectado. Indo para próxima iteração.")
+                    self.interpreter._is_skip_signal = False
+                    break
+
+                if self.interpreter._is_break_signal:
+                    debug_print(f"loop_through: 'breaky' detectado. Saindo do loop.")
+                    self.interpreter._is_break_signal = False
+                    self.interpreter.returning = False
+                    self.interpreter.env[-1] = original_scope
+                    return
+
+                if self.interpreter.returning:
+                    debug_print(f"loop_through: 'return' de função detectado. Saindo do loop e propagando.")
+                    self.interpreter.env[-1] = original_scope
+                    return
+            
+            if self.interpreter._is_skip_signal:
+                self.interpreter._is_skip_signal = False
+                continue
+        
+        debug_print(f"loop_through: Fim do loop_through.")
+        self.interpreter.current_scope = original_scope
+
     def loop_breaky(self, _):
         debug_print(f"loop_breaky: Sinal de BREAK ativado.")
         self.interpreter._is_break_signal = True

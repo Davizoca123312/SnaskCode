@@ -1,5 +1,6 @@
 from snask_interpreter.utils.debug import debug_print
 from lark.tree import Tree
+import sys
 
 class IOOperations:
     def __init__(self, interpreter):
@@ -16,10 +17,11 @@ class IOOperations:
 
         extra_args = []
         if len(items) > 1 and items[1] is not None:
-            if isinstance(items[1], list):
-                extra_args = items[1]
+            # Se o segundo item é um nó Tree e tem 'cdr_chain' como data, resolva-o
+            if isinstance(items[1], Tree) and items[1].data == 'cdr_chain':
+                extra_args = self._resolve(items[1])
             else:
-                debug_print(f"print_stmt: cdr_chain inesperado, tipo {type(items[1])}, valor {items[1]!r}")
+                # Caso contrário, resolva o item diretamente e coloque-o em uma lista
                 extra_args = [self._resolve(items[1])]
 
         if isinstance(val_to_print, str):
@@ -27,21 +29,19 @@ class IOOperations:
                 try:
                     str_extra_args = [str(arg) for arg in extra_args]
                     num_placeholders = val_to_print.count("{}")
-                    print(val_to_print.format(*str_extra_args[:num_placeholders]))
+                    print(val_to_print + " " + " ".join(map(str, str_extra_args[:num_placeholders])))
                 except IndexError:
-                    print(val_to_print, *extra_args)
+                    print(val_to_print + " " + " ".join(map(str, extra_args)))
                 except Exception as e_fmt:
                     debug_print(f"print_stmt: Erro de formatação '{e_fmt}', imprimindo separadamente.")
-                    print(val_to_print, *extra_args)
+                    print(val_to_print + " " + " ".join(map(str, extra_args)))
             elif extra_args:
-                print(val_to_print, *extra_args)
+                print(val_to_print + " " + " ".join(map(str, extra_args)))
             else:
-                print(val_to_print)
-        else:
-            if extra_args:
-                print(val_to_print, *extra_args)
-            else:
-                print(val_to_print)
+                if extra_args:
+                    print((val_to_print + " " + " ".join(map(str, extra_args))).encode('utf-8').decode(sys.stdout.encoding))
+                else:
+                    print(val_to_print)
 
      except Exception as e:
         raise RuntimeError(f"Erro ao imprimir valor: {e}")
@@ -58,7 +58,7 @@ class IOOperations:
      entrada = input()
      valor = self._converter_input(entrada, expected_type)
 
-     self.env[var_name] = {
+     self.interpreter.env[-1][var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False
@@ -80,7 +80,7 @@ class IOOperations:
      except ValueError:
         raise TypeError(f"Valor inválido para tipo '{expected_type}': {entrada}")
 
-     self.env[var_name] = {
+     self.interpreter.env[-1][var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False
@@ -100,7 +100,7 @@ class IOOperations:
      if expected_type != "str":
         raise TypeError(f"grabtxt só aceita tipo 'str', mas recebeu '{expected_type}'")
 
-     self.env[var_name] = {
+     self.interpreter.env[-1][var_name] = {
         "type": expected_type,
         "value": valor,
         "constant": False

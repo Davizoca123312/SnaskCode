@@ -4,7 +4,7 @@ from snask_interpreter.utils.debug import debug_print
 class FunctionHandler:
     def __init__(self, interpreter):
         self.interpreter = interpreter
-        self.env = interpreter.env
+        # self.env = interpreter.env # Removed: Always use self.interpreter.env directly
         self.functions = interpreter.functions
         self._resolve = interpreter._resolve
         self._check_type = interpreter._check_type
@@ -84,17 +84,17 @@ class FunctionHandler:
 
     def func_call(self, items):
         func_name_token = items[0]
-        arg_list_node = items[1] if len(items) > 1 else None
+        arg_expr_nodes = items[1:]
 
         if isinstance(func_name_token, Tree) and func_name_token.data == 'module_access_expr':
             module_name = str(func_name_token.children[0].value)
             member_name = str(func_name_token.children[1].value)
             
-            if module_name not in self.env:
+            if module_name not in self.interpreter.env:
                 raise NameError(f"Módulo '{module_name}' não encontrado.")
 
-            module_info = self.env[module_name]
-            resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_list_node.children] if arg_list_node else []
+            module_info = self.interpreter.env[module_name]
+            resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_expr_nodes]
 
             if module_info["type"] == "python_module":
                 python_module = module_info["value"]
@@ -133,8 +133,7 @@ class FunctionHandler:
             func_def = self.functions[func_name]
             resolved_args = []
 
-            if arg_list_node:
-                 resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_list_node.children]
+            resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_expr_nodes]
             
             return self._execute_function_body(func_name, func_def, resolved_args)
 
@@ -151,8 +150,7 @@ class FunctionHandler:
                 f"mas recebeu {len(resolved_args)}."
             )
 
-        original_env = self.env
-        self.interpreter.env = self.env.copy()
+        self.interpreter.push_scope()
         
         original_returning = self.interpreter.returning
         original_return_value = self.interpreter.return_value
@@ -168,7 +166,7 @@ class FunctionHandler:
                     f"Argumento '{param_name}' para função '{func_name}': esperado '{param_type_str}', "
                     f"recebeu '{actual_arg_type}' (valor: {arg_val!r})."
                 )
-            self.interpreter.env[param_name] = {"type": param_type_str, "value": arg_val, "constant": False}
+            self.interpreter.env[-1][param_name] = {"type": param_type_str, "value": arg_val, "constant": False}
 
         debug_print(f"_execute_function_body: Ambiente da função '{func_name}' antes da execução: {self.interpreter.env}")
 
@@ -181,7 +179,7 @@ class FunctionHandler:
         
         result_for_this_call = self.interpreter.return_value
 
-        self.interpreter.env = original_env
+        self.interpreter.pop_scope()
         self.interpreter.returning = original_returning
         self.interpreter.return_value = original_return_value
 

@@ -5,7 +5,7 @@ import types # Importar para verificar tipo de módulo Python
 class Resolver:
     def __init__(self, interpreter):
         self.interpreter = interpreter
-        self.env = interpreter.env
+        # self.env = interpreter.env # Removed: Always use self.interpreter.env directly
         self.functions = interpreter.functions
         self.type_checker = interpreter.type_checker # Acesso ao TypeChecker
 
@@ -20,10 +20,10 @@ class Resolver:
                 module_name = str(module_name_token.value)
                 member_name = str(member_name_token.value)
 
-                if module_name not in self.env:
+                if module_name not in self.interpreter.env:
                     raise NameError(f"Módulo '{module_name}' não encontrado.")
                 
-                module_info = self.env[module_name]
+                module_info = self.interpreter.env[module_name]
                 if module_info["type"] != "module":
                     raise TypeError(f"'{module_name}' não é um módulo.")
                 
@@ -61,14 +61,21 @@ class Resolver:
                 debug_print(f"_resolve: Resolvendo método/atributo '{method_name}' em '{obj}'. Resultado: {member!r}")
                 return member # Return the callable method or attribute value
 
-            method = getattr(self.interpreter, method_name, None) # Chamar método no interpretador principal
-            if method:
-                debug_print(f"_resolve: Chamando método '{method_name}' para Tree: {val.data}")
+            if hasattr(self.interpreter.math_ops, method_name):
+                method = getattr(self.interpreter.math_ops, method_name)
+                debug_print(f"_resolve: Chamando método de MathOperations '{method_name}' para Tree: {val.data}")
                 result = method(val.children)
                 debug_print(f"_resolve: Método '{method_name}' retornou: {result!r}")
                 return result
             else:
-                raise ValueError(f"Nó da árvore com 'data' desconhecido ou não avaliável: {method_name}")
+                method = getattr(self.interpreter, method_name, None) # Chamar método no interpretador principal
+                if method:
+                    debug_print(f"_resolve: Chamando método '{method_name}' para Tree: {val.data}")
+                    result = method(val.children)
+                    debug_print(f"_resolve: Método '{method_name}' retornou: {result!r}")
+                    return result
+                else:
+                    raise ValueError(f"Nó da árvore com 'data' desconhecido ou não avaliável: {method_name}")
 
         elif isinstance(val, Token):
             debug_print(f"_resolve: Processando Token: {val.type} '{val.value}'")
@@ -81,9 +88,15 @@ class Resolver:
                 return str(val.value[1:-1].encode('utf-8').decode('unicode_escape'))
             elif val.type == "NAME":
                 varname = val.value
-                if varname in self.env:
-                    return self.env[varname]["value"]
-                elif varname == "true": return True
+                for scope in reversed(self.interpreter.env):
+                    if varname in scope:
+                        if isinstance(scope[varname], dict) and "value" in scope[varname]:
+                            return scope[varname]["value"]
+                        else:
+                            # If it's not a dict with 'value', return the raw value
+                            return scope[varname]
+                
+                if varname == "true": return True
                 elif varname == "false": return False
                 elif varname in self.functions:
                     raise NameError(f"Tentativa de usar função '{varname}' como variável. Para chamar, use 'call {varname}(...)'.")

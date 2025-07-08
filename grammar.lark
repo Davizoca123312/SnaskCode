@@ -21,6 +21,7 @@
      // ===== CONTROLE DE FLUXO =====
      | loop_spin
      | loop_loopy
+     | loop_for
      | loop_breaky
      | loop_skipit
      | conditional_statement
@@ -110,6 +111,7 @@ whenem_block: "whenem" "{" stmt+ "}" -> whenem
 
 loop_spin: "spin" expr ":" stmt+
 loop_loopy: "loopy" ":" stmt+
+loop_for: "for" NAME "in" expr ":" stmt+
 loop_breaky: "breaky"
 loop_skipit: "skipit"
 
