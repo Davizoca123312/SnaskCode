@@ -14,34 +14,7 @@ class IOOperations:
      try:
         val_to_print_node = items[0]
         val_to_print = self._resolve(val_to_print_node)
-
-        extra_args = []
-        if len(items) > 1 and items[1] is not None:
-            # Se o segundo item é um nó Tree e tem 'cdr_chain' como data, resolva-o
-            if isinstance(items[1], Tree) and items[1].data == 'cdr_chain':
-                extra_args = self._resolve(items[1])
-            else:
-                # Caso contrário, resolva o item diretamente e coloque-o em uma lista
-                extra_args = [self._resolve(items[1])]
-
-        if isinstance(val_to_print, str):
-            if '{}' in val_to_print and extra_args:
-                try:
-                    str_extra_args = [str(arg) for arg in extra_args]
-                    num_placeholders = val_to_print.count("{}")
-                    print(val_to_print + " " + " ".join(map(str, str_extra_args[:num_placeholders])))
-                except IndexError:
-                    print(val_to_print + " " + " ".join(map(str, extra_args)))
-                except Exception as e_fmt:
-                    debug_print(f"print_stmt: Erro de formatação '{e_fmt}', imprimindo separadamente.")
-                    print(val_to_print + " " + " ".join(map(str, extra_args)))
-            elif extra_args:
-                print(val_to_print + " " + " ".join(map(str, extra_args)))
-            else:
-                if extra_args:
-                    print((val_to_print + " " + " ".join(map(str, extra_args))).encode('utf-8').decode(sys.stdout.encoding))
-                else:
-                    print(val_to_print)
+        print(val_to_print)
 
      except Exception as e:
         raise RuntimeError(f"Erro ao imprimir valor: {e}")

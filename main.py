@@ -58,6 +58,10 @@ def encontrar_primeiro_arquivo_snask():
     return arquivos[0] if arquivos else None
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == '--version':
+        print("snask version 4.0 stable")
+        sys.exit(0)
+
     input_file = sys.argv[1] if len(sys.argv) > 1 else encontrar_primeiro_arquivo_snask()
     if not input_file:
         print("Nenhum arquivo .snask encontrado.")

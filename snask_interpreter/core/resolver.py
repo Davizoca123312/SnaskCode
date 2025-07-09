@@ -59,7 +59,15 @@ class Resolver:
 
                 member = getattr(obj, method_name)
                 debug_print(f"_resolve: Resolvendo método/atributo '{method_name}' em '{obj}'. Resultado: {member!r}")
-                return member # Return the callable method or attribute value
+                
+                if callable(member):
+                    # Para chamadas de método, assumimos que não há argumentos aqui
+                    # A chamada real com argumentos deve ser tratada pelo func_call
+                    # ou por uma regra específica para method_call com argumentos.
+                    # Por enquanto, apenas retorna o callable.
+                    return member
+                else:
+                    return member # Return the callable method or attribute value
 
             if hasattr(self.interpreter.math_ops, method_name):
                 method = getattr(self.interpreter.math_ops, method_name)
@@ -84,8 +92,6 @@ class Resolver:
                 return float(v_str) if '.' in v_str or 'e' in v_str.lower() else int(v_str)
             elif val.type == "ESCAPED_STRING":
                 return val.value
-            elif val.type == "STRING":
-                return str(val.value[1:-1].encode('utf-8').decode('unicode_escape'))
             elif val.type == "NAME":
                 varname = val.value
                 for scope in reversed(self.interpreter.env):
@@ -93,8 +99,7 @@ class Resolver:
                         if isinstance(scope[varname], dict) and "value" in scope[varname]:
                             return scope[varname]["value"]
                         else:
-                            # If it's not a dict with 'value', return the raw value
-                            return scope[varname]
+                            raise TypeError(f"Variável '{varname}' no escopo está malformada: {scope[varname]!r}")
                 
                 if varname == "true": return True
                 elif varname == "false": return False

@@ -95,8 +95,8 @@ class SnaskInterpreter(Transformer):
     def var_zap(self, items): return self.var_handler.var_zap(items)
 
     # Delegação para FunctionHandler
-    def func_decl(self, items): return self.func_handler.func_decl(items)
-    def craft(self, items): return self.func_handler.craft(items)
+    
+    def function(self, items): return self.func_handler.function(items)
     def func_call(self, items): return self.func_handler.func_call(items)
     def func_call_stmt(self, items): return self.func_handler.func_call_stmt(items)
     def _execute_function_body(self, func_name, func_def, resolved_args): return self.func_handler._execute_function_body(func_name, func_def, resolved_args)

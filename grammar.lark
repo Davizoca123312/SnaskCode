@@ -95,8 +95,10 @@ inputnum_stmt: "grabnum" NAME ":" type
 inputtxt_stmt: "grabtxt" NAME ":" type
 
 // ===== FUNÇÕES =====
-func_decl: "craft" NAME "(" [param ("," param)*] ")" "->" type ":" stmt+ "done" -> craft
-param: NAME ":" type
+func_decl: "function" type NAME "(" [param_list] ")" body -> function
+body: "{" stmt+ "}"
+param_list: param ("," param)*
+param: type NAME
 func_call: (NAME | module_access | method_call) "(" [expr ("," expr)*] ")"
 
 method_call: expr "." NAME

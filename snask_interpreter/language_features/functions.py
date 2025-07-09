@@ -13,74 +13,39 @@ class FunctionHandler:
         self._execute = interpreter._execute
         self._execute_tree = interpreter._execute_tree
 
-    def func_decl(self, items):
-        name_token = items[0]
-        idx = 1
-        param_list_node = None
-        if len(items) > idx and items[idx] is not None and ( (hasattr(items[idx], 'data') and items[idx].data == 'param_list') or isinstance(items[idx], list) ):
-            param_list_node = items[idx]
-            idx += 1
-        
-        return_type_node = items[idx]; idx +=1
-        body_node = items[idx]
+    
 
-        name = str(name_token.value)
-        params_dict = {}
+    def function(self, items):
+     debug_print(f"function: Iniciando definição de função com items: {items}")
 
-        if param_list_node:
-            for param_decl_node in param_list_node.children:
-                param_name = str(param_decl_node.children[0].value)
-                param_type_str = self.type(param_decl_node.children[1].children)
-                params_dict[param_name] = param_type_str
-        
-        return_type_str = self.type(return_type_node.children)
+     # Nova ordem: type, name, params, body
+     return_type_node = items[0]
+     func_name_token = items[1]
+     param_list_node = items[2]
+     body_node = items[3]
 
-        self.functions[name] = {"params": params_dict, "return_type": return_type_str, "body_node": body_node}
-        debug_print(f"func_decl: Função '{name}' declarada. Params: {params_dict}, Retorno: {return_type_str}")
-
-    def craft(self, items):
-     debug_print(f"craft: Iniciando definição de função com items: {items}")
-
-     func_name_token = items[0]
      func_name = str(func_name_token.value)
 
-     return_type_idx = None
-     for i in range(len(items)):
-        if isinstance(items[i], Tree) and items[i].data == "type":
-            return_type_idx = i
-            break
-        elif isinstance(items[i], str) and items[i] in ["int", "str", "float", "bool", "list", "dict", "void", "any"]:
-            return_type_idx = i
-            break
-
-     if return_type_idx is None:
-        raise SyntaxError("craft: Tipo de retorno não encontrado.")
-
-     param_items = items[1:return_type_idx]
-     return_type_raw = items[return_type_idx]
-
-     body_items = [stmt for stmt in items[return_type_idx + 1:] if stmt is not None]
+     return_type_str = self.type(return_type_node.children)
 
      params_dict = {}
-     for param in param_items:
-        if isinstance(param, Tree) and param.data == "param":
-            pname_token, ptype_node = param.children
-            pname = str(pname_token.value)
-            ptype = self.type(ptype_node.children if hasattr(ptype_node, 'children') else [ptype_node])
-            params_dict[pname] = ptype
-
-     if isinstance(return_type_raw, Tree):
-        return_type_str = self.type(return_type_raw.children)
-     else:
-        return_type_str = str(return_type_raw)
+     if param_list_node:
+         for param_decl_node in param_list_node.children:
+             # A ordem em param agora é [type, name]
+             param_type_node = param_decl_node.children[0]
+             param_name_token = param_decl_node.children[1]
+           
+             param_name = str(param_name_token.value)
+             param_type_str = self.type(param_type_node.children)
+             params_dict[param_name] = param_type_str
 
      self.functions[func_name] = {
-        "params": params_dict,
-        "return_type": return_type_str,
-        "body_node": Tree("body", body_items)
-    }
+         "params": params_dict,
+         "return_type": return_type_str,
+         "body_node": body_node
+     }
 
-     debug_print(f"craft: Função '{func_name}' declarada com parâmetros {params_dict} e retorno '{return_type_str}'")
+     debug_print(f"function: Função '{func_name}' declarada com parâmetros {params_dict} e retorno '{return_type_str}'")
 
     def func_call(self, items):
         func_name_token = items[0]

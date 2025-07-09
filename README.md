@@ -20,7 +20,7 @@ Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida 
   - [grabnum](#grabnum)
   - [grabtxt](#grabtxt)
 - [Funções](#funções)
-  - [craft](#craft)
+  - [function](#function)
   - [back](#back)
   - [Chamadas de Função](#chamadas-de-função)
 - [Controle de Fluxo](#controle-de-fluxo)
@@ -125,23 +125,45 @@ grabtxt frase s
 
 ## Funções
 
-### craft
-Define uma função:
+### function
+Define uma função.
+
+**Sintaxe:**
 ```snask
-craft soma(a i, b i) -> i
-  back a + b
-done
+function <tipo_de_retorno> <nome_da_funcao>(<tipo_param1> <nome_param1>, <tipo_param2> <nome_param2>, ...) {
+    // corpo da função
+    back <valor_de_retorno>
+}
+```
+
+**Exemplo:**
+```snask
+function int somar(int a, int b) {
+    back a + b
+}
 ```
 
 ### back
-Retorna valor de função:
+Retorna um valor de dentro de uma função.
+
+**Exemplo:**
 ```snask
-back resultado
+function bool eh_maior_que_dez(int numero) {
+    when numero > 10 {
+        back true
+    }
+    back false
+}
 ```
 
 ### Chamadas de Função
+Para chamar uma função, use o nome da função seguido por parênteses com os argumentos.
+
+**Exemplo:**
 ```snask
-call soma(2, 3)
+// Chamando a função 'somar' que definimos acima
+make resultado int = somar(5, 3)
+shoo(resultado) // Irá imprimir 8
 ```
 
 ## Controle de Fluxo

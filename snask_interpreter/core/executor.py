@@ -20,6 +20,10 @@ class Executor:
 
         debug_print(f"_execute: Executando nó: {stmt_node!r}")
 
+        if stmt_node is None:
+            debug_print(f"_execute: Ignorando nó None.")
+            return
+
         if hasattr(stmt_node, "data"):
             method_name = stmt_node.data
             method = getattr(self.interpreter, method_name, None)
@@ -27,8 +31,6 @@ class Executor:
             if method:
                 debug_print(f"_execute: Chamando método do Transformer '{method_name}' para: {stmt_node.data}")
                 method(stmt_node.children)
-            elif method_name == 'print_stmt': # Explicitly handle print_stmt as a statement
-                self.interpreter.io_ops.print_stmt(stmt_node.children)
             else:
                 debug_print(f"_execute: Sem método Transformer para '{method_name}', tentando resolver como expressão.")
                 try:
@@ -70,7 +72,6 @@ class Executor:
                 debug_print(f"_execute_tree: Parando execução da árvore devido a returning/break/skip.")
                 if self.interpreter._is_break_signal:
                     self.interpreter._is_break_signal = False
-                    self.interpreter.returning = False
                 if self.interpreter._is_skip_signal:
                      self.interpreter._is_skip_signal = False
                 break
