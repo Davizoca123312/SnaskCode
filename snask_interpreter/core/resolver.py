@@ -11,6 +11,7 @@ class Resolver:
 
     def _resolve(self, val):
         debug_print(f"_resolve: Recebido: {val!r} (tipo: {type(val)})")
+        debug_print(f"_resolve: Recebido: {val!r} (tipo: {type(val)})")
         if isinstance(val, Tree):
             method_name = val.data
             if method_name == "module_access_expr":
@@ -69,6 +70,10 @@ class Resolver:
                 else:
                     return member # Return the callable method or attribute value
 
+            elif method_name == "get_dictionary_value":
+                debug_print(f"_resolve: Chamando collection_handler.get_dictionary_value para Tree: {val.data}")
+                return self.interpreter.collection_handler.get_dictionary_value(val.children)
+
             if hasattr(self.interpreter.math_ops, method_name):
                 method = getattr(self.interpreter.math_ops, method_name)
                 debug_print(f"_resolve: Chamando método de MathOperations '{method_name}' para Tree: {val.data}")
@@ -97,7 +102,7 @@ class Resolver:
                 for scope in reversed(self.interpreter.env):
                     if varname in scope:
                         if isinstance(scope[varname], dict) and "value" in scope[varname]:
-                            return scope[varname]["value"]
+                            return scope[varname]
                         else:
                             raise TypeError(f"Variável '{varname}' no escopo está malformada: {scope[varname]!r}")
                 

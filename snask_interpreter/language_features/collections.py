@@ -79,39 +79,60 @@ class CollectionHandler:
     def dict_literal(self, items):
         d = {}
         for i in range(0, len(items), 2):
-            key_item = items[i]
-            if isinstance(key_item, Token) and key_item.type == "NAME":
-                key = str(key_item.value)
-            elif isinstance(key_item, Token) and key_item.type == "ESCAPED_STRING":
-                key = key_item.value
-            else:
-                key = str(self._resolve(key_item))
-            
+            key = self._resolve(items[i])
             value = self._resolve(items[i+1])
             d[key] = value
         return d
 
-    def box_decl(self, items):
+    def dict_declaration(self, items):
         name_token = items[0]
         dict_expr_node = items[1]
         name = str(name_token.value)
         value = self._resolve(dict_expr_node)
         if not isinstance(value, dict):
-            raise TypeError(f"box_decl para '{name}' espera um dicionário, recebeu {self.typeis([value])}.")
-        self.env[name] = {"type": "dict", "value": value, "constant": False}
+            raise TypeError(f"dict_declaration para '{name}' espera um dicionário, recebeu {self.typeis([value])}.")
+        self.env[-1][name] = {"type": "dict", "value": value, "constant": False}
 
-    def box_put(self, items):
-        name_token = items[0]
-        key_node = items[1]
-        value_node = items[2]
-        name = str(name_token.value)
+    def set_dictionary_value(self, items):
+        dict_name_token = items[0] # This is the Token object
+        key = items[1]       # This is the resolved key value
+        value = items[2]     # This is the resolved value
 
-        if name not in self.env or self.env[name]["type"] != "dict":
-            raise NameError(f"'{name}' não é um dicionário declarado para box_put.")
-        
-        key = self._resolve(key_node)
-        val = self._resolve(value_node)
-        self.env[name]["value"][str(key)] = val
+        dict_name = str(dict_name_token.value) # Extract the string value from the Token
+
+        debug_print(f"set_dictionary_value: dict_name: {dict_name!r}, key: {key!r}, value: {value!r}")
+
+        # Resolve the dictionary variable from the environment
+        resolved_dict_var = self._resolve(dict_name_token) # Still pass the Token to _resolve
+        debug_print(f"set_dictionary_value: resolved_dict_var: {resolved_dict_var!r}")
+
+        if not isinstance(resolved_dict_var, dict) or resolved_dict_var.get("type") != "dict":
+            raise TypeError(f"'{dict_name}' não é um dicionário declarado.")
+
+        actual_dict = resolved_dict_var["value"] # Get the actual Python dictionary
+        actual_dict[str(key)] = value
+
+    def get_dictionary_value(self, items):
+        dict_name_token = items[0] # This is now the Token object
+        key = items[1]       # This is the resolved key value
+
+        dict_name = str(dict_name_token.value) # Extract the string value from the Token
+
+        debug_print(f"get_dictionary_value: dict_name: {dict_name!r}, key: {key!r}")
+
+        # Resolve the dictionary variable from the environment
+        resolved_dict_var = self._resolve(dict_name_token) # Still pass the Token to _resolve
+        debug_print(f"get_dictionary_value: resolved_dict_var: {resolved_dict_var!r}")
+
+        if not isinstance(resolved_dict_var, dict) or resolved_dict_var.get("type") != "dict":
+            raise TypeError(f"'{dict_name}' não é um dicionário declarado.")
+
+        actual_dict = resolved_dict_var["value"] # Get the actual Python dictionary
+
+        try:
+            return actual_dict[str(key)]
+        except KeyError:
+            raise KeyError(f"Chave '{key}' não encontrada no dicionário '{dict_name}'.")
 
     def index_access(self, items):
         collection = self._resolve(items[0])

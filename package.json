@@ -3,22 +3,20 @@
   "displayName": "Snask Runner",
   "description": "Runs .snask files",
   "icon": "Snask.png",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.89.0"
-  },
-  "categories": [
-    "Other"
-  ],
+  "version": "1.0.0",
+  "main": "./out/extension.js",
   "activationEvents": [
     "onCommand:snask.runFile"
   ],
-  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "snask.runFile",
         "title": "Run Snask File version"
+      },
+      {
+        "command": "snask.managePackages",
+        "title": "Snask: Manage Packages"
       }
     ],
     "menus": {
@@ -43,8 +41,22 @@
         ],
         "configuration": "./language-configuration.json"
       }
+    ],
+    "debuggers": [
+      {
+        "type": "snask",
+        "label": "Snask Debug",
+        "program": "./out/snaskDebug.js",
+        "runtime": "node"
+      }
     ]
   },
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -53,6 +65,13 @@
   "devDependencies": {
     "@types/node": "^24.0.10",
     "@types/vscode": "^1.89.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vscode-debugadapter": "^1.51.0",
+    "vscode-debugprotocol": "^1.51.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.12"
   }
 }

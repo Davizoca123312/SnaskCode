@@ -14,7 +14,10 @@ class IOOperations:
      try:
         val_to_print_node = items[0]
         val_to_print = self._resolve(val_to_print_node)
-        print(val_to_print)
+        if isinstance(val_to_print, dict) and 'value' in val_to_print:
+            print(val_to_print['value'])
+        else:
+            print(val_to_print)
 
      except Exception as e:
         raise RuntimeError(f"Erro ao imprimir valor: {e}")

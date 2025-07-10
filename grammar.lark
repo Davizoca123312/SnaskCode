@@ -30,9 +30,8 @@
      | pack_decl
      | pack_add
      | pack_get
-     | box_decl
-     | box_put
-     | box_get
+     | dict_declaration
+     | set_dictionary_value
 
      // ===== ARQUIVOS / TEMPO / CONVERSÃO / LIB =====
      | wait_stmt
@@ -48,9 +47,9 @@ gui_stmt: create_window_stmt
         | create_entry_stmt
         | start_gui_loop_stmt
 
-create_window_stmt: "window" string NUMBER NUMBER
-create_button_stmt: "button" string string
-create_label_stmt: "label" string
+create_window_stmt: "window" ESCAPED_STRING NUMBER NUMBER
+create_button_stmt: "button" ESCAPED_STRING ESCAPED_STRING
+create_label_stmt: "label" ESCAPED_STRING
 create_entry_stmt: "entry"
 start_gui_loop_stmt: "start_gui_loop"
 
@@ -73,7 +72,7 @@ start_gui_loop_stmt: "start_gui_loop"
      | writecstring_stmt
 
 // ===== IMPORTAÇÃO =====
-use_lib_stmt: "to" "use" string           -> use_lib
+use_lib_stmt: "to" "use" ESCAPED_STRING           -> use_lib
 
 // ===== ARQUIVOS =====
 file_stmt: file_read_stmt | file_write_stmt
@@ -124,9 +123,10 @@ pack_get: "packget" NAME expr
 list_literal: "[" [expr ("," expr)*] "]"
 
 // ===== DICIONÁRIOS (boxes) =====
-box_decl: "box" NAME ":" type "=" "{" [NAME ":" expr ("," NAME ":" expr)*] "}"
-box_put: "boxput" NAME NAME expr
-box_get: "boxget" NAME NAME
+dict_declaration: "dict" NAME "=" dict_literal ";"
+set_dictionary_value: "set_dictionary_value" NAME expr expr ";"
+get_dictionary_value: "get_dictionary_value" "(" expr "," expr ")"
+dict_literal: "{" [expr ":" expr ("," expr ":" expr)*] "}"
 
 // ===== TEMPO =====
 wait_stmt: "snooze" expr
@@ -186,20 +186,21 @@ bitclap_stmt: NAME "=" "bitclap" expr "and" expr -> bitclap_stmt
      | "treasures" "(" expr ")"              -> treasures
      | "straighten" "(" expr ")"                 -> straighten
      | "smooth" "(" expr ")"               -> smooth
-     
+     | get_dictionary_value "(" expr "," expr ")" -> get_dictionary_value
+     | atom
      | atom
      | module_access
 
 
 
 ?atom: "[" [expr ("," expr)*] "]" -> list_literal
-     | "{" [NAME ":" expr ("," NAME ":" expr)*] "}" -> dict_literal
+     
      | func_call
      | NAME "[" expr "]" -> index_access
      | "httpget" "(" expr ")" -> httpget
      | NUMBER
      | FLOAT_NUMBER // Adicionado suporte a números de ponto flutuante
-     | string
+     | ESCAPED_STRING
      | NAME
      | "(" expr ")"
 
@@ -212,7 +213,7 @@ module_access: NAME "." NAME -> module_access_expr
 %import common.CNAME -> NAME
 %import common.NUMBER
 %import common.ESCAPED_STRING
-string: ESCAPED_STRING -> string
+
 %import common.WS
 %ignore WS
 

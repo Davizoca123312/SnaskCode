@@ -1,0 +1,49 @@
+
+{
+    "scopeName": "source.snask",
+    patterns": [
+        {
+            "name": "comment.line.number-sign.snask",
+            "match": "#.*$"
+        },
+        {
+            "name": "string.quoted.double.snask",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.snask",
+                    "match": "\\."
+                }
+            ]
+        },
+        {
+            "name": "string.quoted.single.snask",
+            "begin": "'",
+            "end": "'",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.snask",
+                    "match": "\\."
+                }
+            ]
+        },
+        {
+            "name": "constant.numeric.snask",
+            "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
+        },
+        {
+            "name": "keyword.control.snask",
+            "match": "\\b(se|senao|enquanto|para|faca|tente|pegue|finalmente|retorne|pare|continue|importe|de|novo|classe|funcao)\\b"
+        },
+        {
+            "name": "constant.language.snask",
+            "match": "\\b(nulo|verdadeiro|falso)\\b"
+        },
+        {
+            "name": "keyword.operator.snask",
+            "match": "(\\+|\\-|\\*|\\/|%|\\^|e|ou|nao|==|!=|<|>|<=|>=|=)"
+        }
+    ],
+    "repository": {}
+}
