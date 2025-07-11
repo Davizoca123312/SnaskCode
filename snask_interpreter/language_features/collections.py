@@ -35,11 +35,10 @@ class CollectionHandler:
         resolved_list = self._resolve(list_literal_node)
 
         if not isinstance(resolved_list, list):
-            raise TypeError(f"pack_decl para '{name}' espera uma lista, mas recebeu {self.interpreter.typeis([resolved_list])}.")
+            raise TypeError(f"A declaração de pacote para '{name}' esperava uma lista, mas recebeu {self.interpreter.typeis([resolved_list])}.")
         
-        # Verifica se o tipo declarado é 'list'
         if declared_type != "list":
-            raise TypeError(f"Tipo declarado para '{name}' é '{declared_type}', mas o valor é uma lista.")
+            raise TypeError(f"O tipo declarado para '{name}' é '{declared_type}', mas o valor é uma lista.")
 
         self.interpreter.env[-1][name] = {"type": declared_type, "value": resolved_list, "constant": False}
         debug_print(f"pack_decl: Lista '{name}' definida no ambiente: {self.interpreter.env[-1][name]}")
@@ -52,16 +51,16 @@ class CollectionHandler:
      index = self._resolve(index_node)
 
      if name not in self.env:
-        raise NameError(f"Lista '{name}' não foi declarada.")
+        raise NameError(f"A lista '{name}' não foi declarada.")
      lista = self.env[name]["value"]
 
      if not isinstance(lista, list):
         raise TypeError(f"'{name}' não é uma lista.")
      if not isinstance(index, int):
-        raise TypeError(f"O índice fornecido deve ser inteiro.")
+        raise TypeError(f"O índice fornecido deve ser um número inteiro.")
 
      if index < 0 or index >= len(lista):
-        raise IndexError(f"Índice {index} fora do limite da lista '{name}'.")
+        raise IndexError(f"Índice {index} fora dos limites para a lista '{name}'.")
 
      return lista[index]
 
@@ -69,12 +68,19 @@ class CollectionHandler:
         name_token = items[0]
         element_node = items[1]
         name = str(name_token.value)
+
+        list_var = None
+        for scope in reversed(self.interpreter.env):
+            if name in scope:
+                list_var = scope[name]
+                break
         
-        if name not in self.env or self.env[name]["type"] != "list":
-            raise NameError(f"'{name}' não é uma lista declarada para pack_add.")
+        if list_var is None or list_var.get("type") != "list":
+            raise NameError(f"'{name}' não é uma lista declarada para packadd.")
         
         element_value = self._resolve(element_node)
-        self.env[name]["value"].append(element_value)
+        list_var["value"].append(element_value)
+        debug_print(f"pack_add: Elemento '{element_value}' adicionado à lista '{name}'. Novo valor: {list_var['value']}")
 
     def dict_literal(self, items):
         d = {}
@@ -90,44 +96,42 @@ class CollectionHandler:
         name = str(name_token.value)
         value = self._resolve(dict_expr_node)
         if not isinstance(value, dict):
-            raise TypeError(f"dict_declaration para '{name}' espera um dicionário, recebeu {self.typeis([value])}.")
+            raise TypeError(f"A declaração de dicionário para '{name}' esperava um dicionário, mas recebeu {self.typeis([value])}.")
         self.env[-1][name] = {"type": "dict", "value": value, "constant": False}
 
     def set_dictionary_value(self, items):
-        dict_name_token = items[0] # This is the Token object
-        key = items[1]       # This is the resolved key value
-        value = items[2]     # This is the resolved value
+        dict_name_token = items[0]
+        key = items[1]
+        value = items[2]
 
-        dict_name = str(dict_name_token.value) # Extract the string value from the Token
+        dict_name = str(dict_name_token.value)
 
         debug_print(f"set_dictionary_value: dict_name: {dict_name!r}, key: {key!r}, value: {value!r}")
 
-        # Resolve the dictionary variable from the environment
-        resolved_dict_var = self._resolve(dict_name_token) # Still pass the Token to _resolve
+        resolved_dict_var = self._resolve(dict_name_token)
         debug_print(f"set_dictionary_value: resolved_dict_var: {resolved_dict_var!r}")
 
         if not isinstance(resolved_dict_var, dict) or resolved_dict_var.get("type") != "dict":
             raise TypeError(f"'{dict_name}' não é um dicionário declarado.")
 
-        actual_dict = resolved_dict_var["value"] # Get the actual Python dictionary
+        actual_dict = resolved_dict_var["value"]
         actual_dict[str(key)] = value
 
     def get_dictionary_value(self, items):
-        dict_name_token = items[0] # This is now the Token object
-        key = items[1]       # This is the resolved key value
+        dict_name_token = items[0]
+        key = items[1]
 
-        dict_name = str(dict_name_token.value) # Extract the string value from the Token
+        dict_name = str(dict_name_token.value)
 
         debug_print(f"get_dictionary_value: dict_name: {dict_name!r}, key: {key!r}")
 
-        # Resolve the dictionary variable from the environment
-        resolved_dict_var = self._resolve(dict_name_token) # Still pass the Token to _resolve
+        resolved_dict_var = self._resolve(dict_name_token)
         debug_print(f"get_dictionary_value: resolved_dict_var: {resolved_dict_var!r}")
 
         if not isinstance(resolved_dict_var, dict) or resolved_dict_var.get("type") != "dict":
             raise TypeError(f"'{dict_name}' não é um dicionário declarado.")
 
-        actual_dict = resolved_dict_var["value"] # Get the actual Python dictionary
+        actual_dict = resolved_dict_var["value"]
 
         try:
             return actual_dict[str(key)]
@@ -145,11 +149,11 @@ class CollectionHandler:
             actual_collection_type = self.typeis([collection])
             raise TypeError(f"Objeto do tipo '{actual_collection_type}' não suporta indexação (valor: {collection!r}).")
 
-    def remove(self, items):
+    def toss(self, items):
         lst = self._resolve(items[0])
         element = self._resolve(items[1])
         if not isinstance(lst, list):
-            raise TypeError("remove espera uma lista como primeiro argumento.")
+            raise TypeError("toss espera uma lista como primeiro argumento.")
         try:
             lst.remove(element)
         except ValueError:
@@ -184,7 +188,7 @@ class CollectionHandler:
         try:
             lst.sort()
         except TypeError:
-            raise TypeError("Elementos na lista não são comparáveis para ordenação.")
+            raise TypeError("Os elementos na lista não são comparáveis para ordenação.")
 
     def keys(self, items):
         d = self._resolve(items[0])

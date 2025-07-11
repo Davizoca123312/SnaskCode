@@ -26,7 +26,7 @@ class ControlFlowHandler:
                     break 
         else:
             debug_print(f"when: Condição FALSA. Corpo não será executado.")
-            self.interpreter._conditional_block_executed = False
+            # Não alteramos a flag aqui para permitir que a cadeia when/whenn funcione.
         debug_print(f"when: _conditional_block_executed depois: {self.interpreter._conditional_block_executed}")
         
     def whenn(self, items):

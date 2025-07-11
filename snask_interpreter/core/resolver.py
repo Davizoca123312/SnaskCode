@@ -96,13 +96,14 @@ class Resolver:
                 v_str = str(val.value)
                 return float(v_str) if '.' in v_str or 'e' in v_str.lower() else int(v_str)
             elif val.type == "ESCAPED_STRING":
-                return val.value
+                # Remove as aspas externas e decodifica escapes como \n, \t, etc.
+                return val.value[1:-1].encode('utf-8').decode('unicode_escape')
             elif val.type == "NAME":
                 varname = val.value
                 for scope in reversed(self.interpreter.env):
                     if varname in scope:
                         if isinstance(scope[varname], dict) and "value" in scope[varname]:
-                            return scope[varname]
+                            return scope[varname]['value']
                         else:
                             raise TypeError(f"Variável '{varname}' no escopo está malformada: {scope[varname]!r}")
                 

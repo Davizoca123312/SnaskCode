@@ -1,0 +1,42 @@
+make produtos :list = ["banana", "maca", "uva"]
+make rodando :bool = true
+
+shoo("--- Bem-vindo ao Supermercado Snask ---")
+
+loopy:
+    shoo("")
+    shoo("Opções:")
+    shoo("1. Ver produtos")
+    shoo("2. Adicionar produto")
+    shoo("3. Remover produto")
+    shoo("4. Sair")
+    shoo("------------------------------------")
+    grabnum escolha :int
+
+    when escolha == 1 {
+        shoo("Produtos na sua lista:")
+        shoo(produtos)
+    }
+    whenn escolha == 2 {
+        shoo("Digite o nome do produto para adicionar:")
+        grabtxt addproduto :str
+        packadd[produtos], {addproduto}
+        shoo(addproduto, " foi adicionado!")
+    }
+    whenn escolha == 3 {
+        shoo("Digite o nome do produto para remover:")
+        grabtxt delproduto :str
+        packdel(produtos, delproduto)
+        shoo(delproduto, " foi removido!")
+    }
+    whenn escolha == 4 {
+        shoo("Obrigado por usar o Supermercado Snask. Volte sempre!")
+        set rodando = false
+    }
+    whenem {
+        shoo("Opção inválida! Por favor, escolha um número de 1 a 4.")
+    }
+
+    when rodando == false {
+        breaky
+    }

@@ -11,16 +11,19 @@ class IOOperations:
         self.type = interpreter.type
 
     def print_stmt(self, items):
-     try:
-        val_to_print_node = items[0]
-        val_to_print = self._resolve(val_to_print_node)
-        if isinstance(val_to_print, dict) and 'value' in val_to_print:
-            print(val_to_print['value'])
-        else:
-            print(val_to_print)
-
-     except Exception as e:
-        raise RuntimeError(f"Erro ao imprimir valor: {e}")
+        try:
+            outputs = []
+            for item in items:
+                val = self._resolve(item)
+                if val is not None:
+                    if isinstance(val, dict) and 'value' in val:
+                        outputs.append(str(val['value']))
+                    else:
+                        outputs.append(str(val))
+            if outputs:
+                print(" ".join(outputs))
+        except Exception as e:
+            raise RuntimeError(f"Erro ao imprimir valor: {e}")
 
     def input_stmt(self, items):
      name_token, type_node = items

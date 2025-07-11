@@ -3,6 +3,7 @@ import os
 import time
 from lark import Lark, UnexpectedInput
 import io
+import subprocess
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
@@ -58,6 +59,10 @@ def encontrar_primeiro_arquivo_snask():
     return arquivos[0] if arquivos else None
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == 'snaskide':
+        subprocess.run(["python", os.path.join(BASE_DIR, "snaskide.py")])
+        sys.exit(0)
+
     if len(sys.argv) > 1 and sys.argv[1] == '--version':
         print("snask version 4.0 stable")
         sys.exit(0)

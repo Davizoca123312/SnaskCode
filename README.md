@@ -1,208 +1,209 @@
-# 📘 SnaskLang: Manual de Referência
+# 📘 SnaskLang: Reference Manual
 
-Bem-vindo à documentação oficial da linguagem Snask, uma linguagem divertida de alto nível que combina simplicidade com poder expressivo!
+Welcome to the official documentation for the Snask language, a fun high-level language that combines simplicity with expressive power!
 
 ---
 
-## 📚 Sumário
-- [Introdução](#introdução)
-- [Fundamentos da Linguagem](#fundamentos-da-linguagem)
-  - [Comentários](#comentários)
-  - [Tipos de Dados](#tipos-de-dados)
-  - [Variáveis e Constantes](#variáveis-e-constantes)
+## 📚 Table of Contents
+- [Introduction](#introduction)
+- [Language Fundamentals](#language-fundamentals)
+  - [Comments](#comments)
+  - [Data Types](#data-types)
+  - [Variables and Constants](#variables-and-constants)
     - [make](#make)
     - [keep](#keep)
     - [set](#set)
     - [zap](#zap)
-- [Entrada e Saída](#entrada-e-saída)
+- [Input and Output](#input-and-output)
   - [shoo](#shoo)
   - [grab](#grab)
   - [grabnum](#grabnum)
   - [grabtxt](#grabtxt)
-- [Funções](#funções)
+- [Functions](#functions)
   - [function](#function)
   - [back](#back)
-  - [Chamadas de Função](#chamadas-de-função)
-- [Controle de Fluxo](#controle-de-fluxo)
+  - [Function Calls](#function-calls)
+- [Flow Control](#flow-control)
   - [when](#when)
   - [whenn](#whenn)
   - [whenem](#whenem)
   - [spin](#spin)
   - [loopy](#loopy)
-  - [breaky e skipit](#breaky-e-skipit)
+  - [breaky and skipit](#breaky-and-skipit)
   - [for](#for)
-- [Coleções](#coleções)
-  - [pack (listas)](#pack-listas)
+- [Collections](#collections)
+  - [pack (lists)](#pack-lists)
   - [packadd](#packadd)
   - [packget](#packget)
-  - [box (dicionários)](#box-dicionários)
+  - [packdel](#packdel)
+  - [box (dictionaries)](#box-dictionaries)
   - [boxput](#boxput)
   - [boxget](#boxget)
-- [Operações de Tempo](#operações-de-tempo)
+- [Time Operations](#time-operations)
   - [snooze](#snooze)
-- [Conversões](#conversões)
+- [Conversions](#conversions)
   - [convert](#convert)
-- [Arquivos e Bibliotecas](#arquivos-e-bibliotecas)
-  - [readfile e writefile](#readfile-e-writefile)
+- [Files and Libraries](#files-and-libraries)
+  - [readfile and writefile](#readfile-and-writefile)
   - [to use](#to-use)
-- [Interface Gráfica (GUI)](#interface-gráfica-gui)
+- [Graphical User Interface (GUI)](#graphical-user-interface-gui)
   - [create_window](#create_window)
   - [create_button](#create_button)
   - [create_label](#create_label)
   - [create_entry](#create_entry)
   - [start_gui_loop](#start_gui_loop)
-- [Funções Embutidas](#funções-embutidas)
-  - [lenof e typeis](#lenof-e-typeis)
+- [Built-in Functions](#built-in-functions)
+  - [lenof and typeis](#lenof-and-typeis)
   - [toupper, tolower, startswith, endswith](#toupper-tolower-startswith-endswith)
-  - [jsonparse e httpget](#jsonparse-e-httpget)
-  - [Funções de Memória](#funções-de-memória)
+  - [jsonparse and httpget](#jsonparse-and-httpget)
+  - [Memory Functions](#memory-functions)
 
-## Introdução
-Snask é uma linguagem de alto nível projetada para o **Desenvolvimento Rápido de Aplicações Interativas e Ferramentas de Automação, com Ênfase na Facilidade de Uso e Prototipagem.**
+## Introduction
+Snask is a high-level language designed for **Rapid Development of Interactive Applications and Automation Tools, with an Emphasis on Ease of Use and Prototyping.**
 
-Com uma sintaxe expressiva e legível, Snask abstrai complexidades e permite que desenvolvedores e entusiastas transformem ideias em protótipos e ferramentas funcionais de forma ágil. Sua capacidade de integrar interfaces gráficas (GUI) de maneira intuitiva a torna ideal para democratizar a criação de software, permitindo que usuários com diferentes níveis de experiência construam suas próprias soluções para automatizar tarefas cotidianas e otimizar fluxos de trabalho.
+With an expressive and readable syntax, Snask abstracts complexities and allows developers and enthusiasts to transform ideas into functional prototypes and tools quickly. Its ability to intuitively integrate graphical interfaces (GUI) makes it ideal for democratizing software creation, enabling users with different levels of experience to build their own solutions to automate daily tasks and optimize workflows.
 
-## Fundamentos da Linguagem
+## Language Fundamentals
 
-### Comentários
-Use `#` para escrever comentários de linha única.
+### Comments
+Use `#` for single-line comments.
 
-### Tipos de Dados
-Suporta `int`, `float`, `str`, `bool`, `list`, `dict`, `void`, `any`.
+### Data Types
+Supports `int`, `float`, `str`, `bool`, `list`, `dict`, `void`, `any`.
 
-### Variáveis e Constantes
+### Variables and Constants
 
 #### make
-Declara uma variável:
+Declares a variable:
 ```snask
-make x i = 10
+make x :int = 10
 ```
 
 #### keep
-Declara uma constante:
+Declares a constant:
 ```snask
-keep pi f = 3.14
+keep pi :float = 3.14
 ```
 
 #### set
-Altera valor de variável:
+Changes a variable's value:
 ```snask
 set x = 42
 ```
 
 #### zap
-Remove variável do ambiente:
+Removes a variable from the environment:
 ```snask
 zap x
 ```
 
-## Entrada e Saída
+## Input and Output
 
 ### shoo
-Imprime na tela:
+Prints to the screen:
 ```snask
-shoo("Olá, mundo!")
-shoo(minhaVariavel)
+shoo("Hello, world!")
+shoo(myVariable)
 ```
 
 ### grab
-Recebe entrada genérica e armazena na variável especificada no ambiente global:
+Receives generic input and stores it in the specified variable in the global environment:
 ```snask
-grab nome s
+grab name :str
 ```
 
 ### grabnum
-Recebe um número do usuário e armazena na variável especificada no ambiente global:
+Receives a number from the user and stores it in the specified variable in the global environment:
 ```snask
-grabnum idade i
+grabnum age :int
 ```
 
 ### grabtxt
-Recebe texto do usuário e armazena na variável especificada no ambiente global:
+Receives text from the user and stores it in the specified variable in the global environment:
 ```snask
-grabtxt frase s
+grabtxt phrase :str
 ```
 
-## Funções
+## Functions
 
 ### function
-Define uma função.
+Defines a function.
 
-**Sintaxe:**
+**Syntax:**
 ```snask
-function <tipo_de_retorno> <nome_da_funcao>(<tipo_param1> <nome_param1>, <tipo_param2> <nome_param2>, ...) {
-    // corpo da função
-    back <valor_de_retorno>
+function <return_type> <function_name>(<param1_type> <param1_name>, <param2_type> <param2_name>, ...) {
+    // function body
+    back <return_value>
 }
 ```
 
-**Exemplo:**
+**Example:**
 ```snask
-function int somar(int a, int b) {
+function int sum(int a, int b) {
     back a + b
 }
 ```
 
 ### back
-Retorna um valor de dentro de uma função.
+Returns a value from within a function.
 
-**Exemplo:**
+**Example:**
 ```snask
-function bool eh_maior_que_dez(int numero) {
-    when numero > 10 {
+function bool is_greater_than_ten(int number) {
+    when number > 10 {
         back true
     }
     back false
 }
 ```
 
-### Chamadas de Função
-Para chamar uma função, use o nome da função seguido por parênteses com os argumentos.
+### Function Calls
+To call a function, use the function name followed by parentheses with the arguments.
 
-**Exemplo:**
+**Example:**
 ```snask
-// Chamando a função 'somar' que definimos acima
-make resultado int = somar(5, 3)
-shoo(resultado) // Irá imprimir 8
+// Calling the 'sum' function defined above
+make result int = sum(5, 3)
+shoo(result) // Will print 8
 ```
 
-## Controle de Fluxo
+## Flow Control
 
 ### when
-Condicional (como `if`):
+Conditional (like `if`):
 ```snask
 when x > 5 {
-  shoo("Maior que 5")
+  shoo("Greater than 5")
 }
 ```
 
 ### whenn
-Condicional "else if". Executa se a condição for verdadeira e nenhum `when` ou `whenn` anterior na mesma estrutura condicional tiver sido executado:
+"Else if" conditional. Executes if the condition is true and no previous `when` or `whenn` in the same conditional structure has been executed:
 ```snask
 when x > 5 {
-  shoo("Maior que 5")
+  shoo("Greater than 5")
 }
 whenn x == 5 {
-  shoo("Igual a 5")
+  shoo("Equal to 5")
 }
 ```
 
 ### whenem
-Condicional "else". Executa se nenhum `when` ou `whenn` anterior na mesma estrutura condicional tiver sido executado:
+"Else" conditional. Executes if no previous `when` or `whenn` in the same conditional structure has been executed:
 ```snask
 when x > 5 {
-  shoo("Maior que 5")
+  shoo("Greater than 5")
 }
 whenn x == 5 {
-  shoo("Igual a 5")
+  shoo("Equal to 5")
 }
 whenem {
-  shoo("Menor que 5")
+  shoo("Less than 5")
 }
 ```
 
 ### spin
-Loop com condição:
+Loop with condition:
 ```snask
 spin x < 10 {
   set x = x + 1
@@ -210,275 +211,245 @@ spin x < 10 {
 ```
 
 ### loopy
-Loop infinito:
+Infinite loop:
 ```snask
 loopy {
-  shoo("pra sempre")
+  shoo("forever")
 }
 ```
 
-### breaky e skipit
-Interrompe ou pula iteração:
+### breaky and skipit
+Breaks or skips iteration:
 ```snask
 breaky
 skipit
 ```
 
 ### for
-Itera sobre os elementos de uma lista ou os caracteres de uma string. A cada iteração, o elemento atual é atribuído à variável especificada.
+Iterates over the elements of a list or the characters of a string. In each iteration, the current element is assigned to the specified variable.
 ```snask
-pack minha_lista: list = ["maçã", "banana", "cereja"]
-for fruta in minha_lista:
-  shoo("Fruta: ", fruta)
+pack my_list: list = ["apple", "banana", "cherry"]
+for fruit in my_list:
+  shoo("Fruit: ", fruit)
 
-make minha_string: str = "Snask"
-for char in minha_string:
-  shoo("Caractere: ", char)
+make my_string: str = "Snask"
+for char in my_string:
+  shoo("Character: ", char)
 ```
 
-## Coleções
+## Collections
 
-### pack (listas)
+### pack (lists)
 ```snask
-pack numeros l = [1, 2, 3]
+pack numbers :list = [1, 2, 3]
 ```
 
 ### packadd
-Adiciona item:
+Adds an item:
 ```snask
-packadd numeros, 4
+packadd[numbers], {4}
 ```
 
 ### packget
-Acessa item:
+Accesses an item:
 ```snask
-numeros[0]
+numbers[0]
 ```
 
-### box (dicionários)
+### packdel
+Removes an item:
 ```snask
-box dados = {"nome": "João", "idade": 30}
+packdel numbers, 4
+```
+
+### box (dictionaries)
+```snask
+make data :dict = {"name": "John", "age": 30}
 ```
 
 ### boxput
-Insere item:
+Inserts an item:
 ```snask
-boxput dados, "cidade", "SP"
+set_dictionary_value data, "city", "NY"
 ```
 
 ### boxget
-Acessa valor:
+Accesses a value:
 ```snask
-dados["idade"]
+data["age"]
 ```
 
-## Operações de Tempo
+## Time Operations
 
 ### snooze
-(dormir por N segundos — a ser implementado)
+(sleep for N seconds — to be implemented)
 
-## Conversões
+## Conversions
 
 ### convert
-(converter tipos — a ser documentado se implementado)
+(convert types — to be documented if implemented)
 
-## Arquivos e Bibliotecas
+## Files and Libraries
 
-### readfile e writefile
-(leitura e escrita de arquivos — a ser documentado)
+### readfile and writefile
+(file reading and writing — to be documented)
 
 ### to use
-Importa bibliotecas Snask (`.snask`). Ao importar um módulo Snask, ele é executado em um escopo isolado, e suas funções e variáveis declaradas ficam acessíveis através do nome do módulo.
+Imports Snask libraries (`.snask`). When importing a Snask module, it is executed in an isolated scope, and its declared functions and variables become accessible through the module name.
 
 ```snask
-to use "minha_bib"
+to use "my_lib"
 ```
 
-**Acesso a Membros de Módulos:**
-Após importar um módulo, você pode acessar suas funções e variáveis usando a sintaxe `nome_do_modulo.membro`.
+**Accessing Module Members:**
+After importing a module, you can access its functions and variables using the `module_name.member` syntax.
 
-**Exemplo com Módulo Snask (`minha_bib.snask`):**
+**Example with Snask Module (`my_lib.snask`):**
 
-`minha_bib.snask`:
+`my_lib.snask`:
 ```snask
-craft saudacao(nome s) -> void
-  shoo("Olá do módulo: {}", .cdr{nome})
-done
+function greeting(name :str) :void
+  shoo("Hello from module: ", name)
 
-make versao s = "1.0"
+make version s = "1.0"
 ```
 
-Seu código principal:
+Your main code:
 ```snask
-to use "minha_bib"
+to use "my_lib"
 
-call minha_bib.saudacao("Snasker")
-shoo("Versão do módulo: {}", .cdr{minha_bib.versao})
+my_lib.greeting("Snasker")
+shoo("Module version: ", my_lib.version)
 ```
 
-**Exemplo com Módulo Python (`math`):**
+**Example with Python Module (`math`):**
 ```snask
 to use "math"
 
-make raiz f = call math.sqrt(25)
-shoo("Raiz quadrada: {}", .cdr{raiz})
+make root f = math.sqrt(25)
+shoo("Square root: ", root)
 ```
 
-## Arquivos e Bibliotecas
+## Graphical User Interface (GUI)
 
-### readfile e writefile
-(leitura e escrita de arquivos — a ser documentado)
-
-### to use
-Importa bibliotecas Snask (`.snask`). Ao importar um módulo Snask, ele é executado em um escopo isolado, e suas funções e variáveis declaradas ficam acessíveis através do nome do módulo.
-
-```snask
-to use "minha_bib"
-```
-
-**Acesso a Membros de Módulos:**
-Após importar um módulo, você pode acessar suas funções e variáveis usando a sintaxe `nome_do_modulo.membro`.
-
-**Exemplo com Módulo Snask (`minha_bib.snask`):**
-
-`minha_bib.snask`:
-```snask
-craft saudacao(nome s) -> void
-  shoo("Olá do módulo: {}", .cdr{nome})
-done
-
-make versao s = "1.0"
-```
-
-Seu código principal:
-```snask
-to use "minha_bib"
-
-call minha_bib.saudacao("Snasker")
-shoo("Versão do módulo: {}", .cdr{minha_bib.versao})
-```
-
-**Exemplo com Módulo Python (`math`):**
-```snask
-to use "math"
-
-make raiz f = call math.sqrt(25)
-shoo("Raiz quadrada: {}", .cdr{raiz})
-```
-
-## Interface Gráfica (GUI)
-
-A biblioteca `snask_gui` permite criar interfaces gráficas simples usando o Tkinter do Python. Para usá-la, importe-a com `to use "snask_gui"`.
+The `snask_gui` library allows you to create simple graphical interfaces using Python's Tkinter. To use it, import it with `to use "snask_gui"`.
 
 ### create_window
-Cria uma nova janela.
+Creates a new window.
 ```snask
-call snask_gui.create_window("Minha Janela", 400, 300)
+snask_gui.create_window("My Window", 400, 300)
 ```
 
 ### create_button
-Cria um botão na janela. O `callback_func_name` é o nome de uma função Snask que será "chamada" (simulada por enquanto) quando o botão for clicado.
+Creates a button in the window. The `callback_func_name` is the name of a Snask function that will be "called" (simulated for now) when the button is clicked.
 ```snask
-craft minha_acao() -> void:
-  shoo("Botão clicado!")
-done
+function my_action() :void
+  shoo("Button clicked!")
 
-call snask_gui.create_button("Clique Aqui", "minha_acao")
+snask_gui.create_button("Click Here", "my_action")
 ```
 
 ### create_label
-Cria um rótulo de texto na janela.
+Creates a text label in the window.
 ```snask
-call snask_gui.create_label("Olá, GUI Snask!")
+snask_gui.create_label("Hello, Snask GUI!")
 ```
 
 ### create_entry
-Cria um campo de entrada de texto na janela.
+Creates a text entry field in the window.
 ```snask
-call snask_gui.create_entry()
+snask_gui.create_entry()
 ```
 
 ### start_gui_loop
-Inicia o loop principal da interface gráfica. Esta função deve ser chamada no final do seu script GUI Snask.
+Starts the main graphical interface loop. This function should be called at the end of your Snask GUI script.
 ```snask
-call snask_gui.start_gui_loop()
+snask_gui.start_gui_loop()
 ```
 
-## SnaskPack: Gerenciador de Pacotes Snask
+## SnaskPack: Snask Package Manager
 
-SnaskPack é o gerenciador de pacotes oficial do Snask, permitindo que você instale e gerencie bibliotecas Snask de forma fácil.
+SnaskPack is the official Snask package manager, allowing you to easily install and manage Snask libraries.
 
-### Instalando Pacotes
+### Installing Packages
 
-Para instalar um pacote Snask, use o script `snaskpack.py` na raiz do seu projeto:
+To install a Snask package, use the `snaskpack.py` script in your project's root directory:
 
 ```bash
-python snaskpack.py install <nome_do_pacote>
+python snaskpack.py install <package_name>
 ```
 
-Isso simulará o download e a instalação do pacote no diretório `snask_packages/`.
+This will simulate downloading and installing the package into the `snask_packages/` directory.
 
-### Estrutura de um Pacote Snask
+### Snask Package Structure
 
-Um pacote Snask é uma pasta com a seguinte estrutura:
+A Snask package is a folder with the following structure:
 
 ```
-nome_do_pacote/
-├── main.snask          # Arquivo principal da biblioteca
-├── snaskpack.json      # Metadados do pacote (nome, versão, descrição, dependências)
-└── src/                # Outros arquivos .snask da biblioteca (opcional)
+package_name/
+├── main.snask          # Main library file
+├── snaskpack.json      # Package metadata (name, version, description, dependencies)
+└── src/                # Other .snask files in the library (optional)
 ```
 
-Você pode então importar o pacote em seu código Snask usando o comando `to use`:
+You can then import the package into your Snask code using the `to use` command:
 
 ```snask
-to use "nome_do_pacote"
+to use "package_name"
 ```
 
 ---
 
-## Funções Embutidas
+## Built-in Functions
 
-### lenof e typeis
+### lenof and typeis
 ```snask
-lenof minhaLista
-typeis minhaVar
+lenof(myList)
+typeis(myVar)
 ```
 
 ### toupper, tolower, startswith, endswith, chop, glue, swap, snip, finds
 ```snask
-toupper("oi")
-tolower("OI")
+toupper("hi")
+tolower("HI")
 startswith("banana", "ba")
 endswith("banana", "na")
-chop("um,dois,tres", ",") # Divide uma string em uma lista de substrings
-glue(["um", "dois", "tres"], "-") # Une elementos de uma lista em uma string
-swap("hello world", "world", "Snask") # Substitui ocorrências de uma substring
-snip("   espacos   ") # Remove espaços em branco do início e fim da string
-finds("abacate", "baca") # Verifica se uma string contém uma substring
+chop("one,two,three", ",") # Splits a string into a list of substrings
+glue(["one", "two", "three"], "-") # Joins list elements into a string
+swap("hello world", "world", "Snask") # Replaces occurrences of a substring
+snip("   spaces   ") # Removes leading and trailing whitespace from the string
+finds("avocado", "voca") # Checks if a string contains a substring
 ```
 
-### Coleções (Funções Adicionais)
-- `toss(list, element)`: Joga fora a primeira ocorrência de um elemento da lista.
-- `pluck(list, index)`: Arranca um elemento da lista em um índice específico.
-- `tuck(list, index, element)`: Enfia um elemento na lista em um índice específico.
-- `order(list)`: Coloca os elementos da lista em ordem.
-- `locks(dict)`: Retorna uma lista com as chaves (fechaduras) de um dicionário.
-- `treasures(dict)`: Retorna uma lista com os valores (tesouros) de um dicionário.
+### Collections (Additional Functions)
+- `packdel(list, element)`: Removes the first occurrence of an element from the list.
+- `pluck(list, index)`: Removes an element from the list at a specific index.
+- `tuck(list, index, element)`: Inserts an element into the list at a specific index.
+- `order(list)`: Sorts the elements in the list.
+- `locks(dict)`: Returns a list with the keys (locks) of a dictionary.
+- `treasures(dict)`: Returns a list with the values (treasures) of a dictionary.
 
-### Operações Matemáticas (Funções Adicionais)
-- `straighten(number)`: Endireita um número (retorna o valor absoluto).
-- `smooth(number)`: Suaviza um número (arredonda).
+### Mathematical Operations (Additional Functions)
+- `straighten(number)`: Straightens a number (returns the absolute value).
+```snask
+make num :int = -5
+shoo(straighten(num)) // Should print 5
+```
+- `smooth(number)`: Smooths a number (rounds).
+```snask
+make float_num :float = 3.7
+shoo(smooth(float_num)) // Should print 4
+```
 
 
-### jsonparse e httpget
+### jsonparse and httpget
 ```snask
 jsonparse("{\"a\": 1}")
-httpget("https://api.exemplo.com")
+httpget("https://api.example.com")
 ```
 
 
 
 ---
 
-🚀 Desenvolvido com 🧠 e 💥 em SnaskLang.
+🚀 Developed with 🧠 and 💥 in SnaskLang.

@@ -86,7 +86,7 @@ var_zap: "zap" NAME ":" expr
 const_decl: "keep" NAME ":" type "=" expr
 
 // ===== ENTRADA E SAÍDA =====
-print_stmt: "shoo" "(" expr ")" [cdr_chain]
+print_stmt: "shoo" "(" [expr ("," expr)*] ")" [cdr_chain]
 cdr_chain: ".cdr" "{" [expr ("," expr)*] "}"          -> cdr_chain
 
 input_stmt: "grab" NAME ":" type
@@ -118,7 +118,7 @@ loop_skipit: "skipit"
 
 // ===== LISTAS (packs) =====
 pack_decl: "pack" NAME ":" type "=" list_literal -> pack_decl
-pack_add: "packadd" NAME expr
+pack_add: "packadd" "[" NAME "]" "," "{" expr "}"
 pack_get: "packget" NAME expr
 list_literal: "[" [expr ("," expr)*] "]"
 
@@ -156,6 +156,7 @@ bitclap_stmt: NAME "=" "bitclap" expr "and" expr -> bitclap_stmt
 
 // ===== EXPRESSÕES =====
 ?expr: expr "is" expr                 -> is_
+     | expr "==" expr                -> eq
      | expr "aint" expr              -> aint
      | expr "over" expr              -> over
      | expr "under" expr             -> lt
@@ -178,7 +179,7 @@ bitclap_stmt: NAME "=" "bitclap" expr "and" expr -> bitclap_stmt
      | "swap" "(" expr "," expr "," expr ")" -> swap
      | "snip" "(" expr ")"                -> snip
      | "finds" "(" expr "," expr ")"   -> finds
-     | "toss" "(" expr "," expr ")"     -> toss
+     
      | "pluck" "(" expr "," expr ")"        -> pluck
      | "tuck" "(" expr "," expr "," expr ")" -> tuck
      | "order" "(" expr ")"                -> order

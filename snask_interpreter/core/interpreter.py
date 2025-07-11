@@ -21,6 +21,8 @@ from snask_interpreter.builtins.math_ops import MathOperations
 from snask_interpreter.builtins.literals import LiteralHandlers
 from snask_interpreter.builtins.snask_tkinter_bridge import get_snask_gui_instance
 
+from snask_interpreter.builtins.native_functions import BuiltinFunctions
+
 class SnaskInterpreter(Transformer):
     def __init__(self, parser=None):
         self.env = [{}] # Stack of scopes, global scope at index 0
@@ -54,6 +56,9 @@ class SnaskInterpreter(Transformer):
         self.math_ops = MathOperations(self)
         self.literal_handlers = LiteralHandlers(self)
         self.gui_ops_handler = GuiOperationsHandler(self)
+
+        self.builtin_functions = BuiltinFunctions(self)
+        self.builtin_functions.register()
 
     def push_scope(self, new_scope=None):
         if new_scope is None:
@@ -129,7 +134,7 @@ class SnaskInterpreter(Transformer):
     def dict_declaration(self, items): return self.collection_handler.dict_declaration(items)
     def set_dictionary_value(self, items): return self.collection_handler.set_dictionary_value(items)
     def index_access(self, items): return self.collection_handler.index_access(items)
-    def toss(self, items): return self.collection_handler.toss(items)
+    def toss_stmt(self, items): return self.collection_handler.toss(items)
     def pluck(self, items): return self.collection_handler.pluck(items)
     def tuck(self, items): return self.collection_handler.tuck(items)
     def order(self, items): return self.collection_handler.order(items)

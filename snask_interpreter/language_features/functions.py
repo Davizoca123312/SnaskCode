@@ -100,7 +100,10 @@ class FunctionHandler:
 
             resolved_args = [self._resolve(arg_expr_node) for arg_expr_node in arg_expr_nodes]
             
-            return self._execute_function_body(func_name, func_def, resolved_args)
+            if func_def.get("native"):
+                return func_def["native"](*resolved_args)
+            else:
+                return self._execute_function_body(func_name, func_def, resolved_args)
 
     def func_call_stmt(self, items):
         debug_print(f"func_call_stmt: Executando chamada de função como instrução.")
