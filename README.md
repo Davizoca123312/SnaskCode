@@ -5,7 +5,6 @@ Welcome to the official documentation for the Snask language, a fun high-level l
 ---
 
 ## 📚 Table of Contents
-- [Introduction](#introduction)
 - [Language Fundamentals](#language-fundamentals)
   - [Comments](#comments)
   - [Data Types](#data-types)
@@ -58,8 +57,7 @@ Welcome to the official documentation for the Snask language, a fun high-level l
   - [jsonparse and httpget](#jsonparse-and-httpget)
   - [Memory Functions](#memory-functions)
 
-## Introduction
-Snask is a high-level language designed for **Rapid Development of Interactive Applications and Automation Tools, with an Emphasis on Ease of Use and Prototyping.**
+
 
 With an expressive and readable syntax, Snask abstracts complexities and allows developers and enthusiasts to transform ideas into functional prototypes and tools quickly. Its ability to intuitively integrate graphical interfaces (GUI) makes it ideal for democratizing software creation, enabling users with different levels of experience to build their own solutions to automate daily tasks and optimize workflows.
 
